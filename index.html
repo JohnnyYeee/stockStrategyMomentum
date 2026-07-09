@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>右侧浅回调筛选器</title>
+<title>Mom 12-1 动量策略</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@ header{padding:46px 0 26px; border-bottom:1px solid var(--line)}
   line-height:1.02; letter-spacing:-.02em}
 .title .en{display:block; font-size:clamp(13px,1.6vw,16px); font-weight:500;
   letter-spacing:.04em; color:var(--muted); margin-top:10px; font-family:var(--mono)}
-.thesis{max-width:430px; color:var(--muted); font-size:13.5px; line-height:1.6; margin-top:16px}
+.thesis{max-width:440px; color:var(--muted); font-size:13.5px; line-height:1.6; margin-top:16px}
 .thesis b{color:var(--ink); font-weight:600}
 /* instrument readout */
 .readout{display:flex; gap:0; border:1px solid var(--line); border-radius:var(--r);
@@ -55,6 +55,9 @@ header{padding:46px 0 26px; border-bottom:1px solid var(--line)}
 .readout .v{font-family:var(--mono); font-size:26px; font-weight:600; margin-top:5px; line-height:1}
 .readout .v.hot{color:var(--phos)}
 .readout .v small{font-size:13px; color:var(--muted); font-weight:400}
+.readout .v.date{font-size:15px; padding-top:8px}
+.readout .v.reb{font-size:15px; padding-top:8px}
+.readout .v.reb.today{color:var(--amber)}
 
 /* sector chips */
 .sectorbar{display:flex; gap:8px; flex-wrap:wrap; margin-top:22px}
@@ -72,6 +75,7 @@ header{padding:46px 0 26px; border-bottom:1px solid var(--line)}
 .lg{display:flex; gap:9px; align-items:center; font-size:12.5px; color:var(--muted)}
 .lg svg{flex:0 0 auto}
 .lg b{color:var(--ink); font-weight:600; margin-right:2px}
+.swatch{width:15px;height:11px;border-radius:2px;display:inline-block}
 
 /* ===== controls ===== */
 .controls{display:flex; gap:12px; align-items:center; flex-wrap:wrap;
@@ -96,25 +100,37 @@ select{appearance:none; background:var(--panel); border:1px solid var(--line);
   border-radius:8px; cursor:pointer; outline:none}
 .selwrap svg{position:absolute; right:11px; top:50%; transform:translateY(-50%); pointer-events:none; opacity:.5}
 
-/* ===== results ===== */
+/* ===== group headers ===== */
+.grouphdr{display:flex; align-items:baseline; gap:12px; margin:26px 2px 12px}
+.grouphdr .gt{font-family:var(--disp); font-weight:600; font-size:16px}
+.grouphdr .gs{font-family:var(--mono); font-size:11px; color:var(--faint);
+  letter-spacing:.08em; text-transform:uppercase}
+.grouphdr .gline{flex:1; height:1px; background:var(--line)}
 .count{font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.1em;
-  text-transform:uppercase; padding:4px 2px 12px}
+  text-transform:uppercase; padding:4px 2px 6px}
+
+/* ===== results ===== */
 .list{display:flex; flex-direction:column; gap:10px}
-.row{display:grid; grid-template-columns:30px 168px 1fr 230px 120px;
+.row{display:grid; grid-template-columns:30px 168px 1fr 214px 128px;
   align-items:center; position:relative; gap:18px; background:var(--panel);
   border:1px solid var(--line); border-radius:var(--r); padding:15px 18px;
   box-shadow:0 1px 3px rgba(22,34,48,.05);
   transition:border-color .18s, transform .18s, box-shadow .18s}
 .row:hover{border-color:rgba(12,156,134,.5); transform:translateX(2px);
   box-shadow:0 4px 14px rgba(22,34,48,.09)}
-/* AI / 自选池 高亮:左侧渐变竖条 + 淡金底 */
-.row.ai{background:linear-gradient(90deg,rgba(188,119,16,.06),var(--panel) 42%)}
-.row.ai::before{content:""; position:absolute; left:0; top:11px; bottom:11px; width:3px;
-  border-radius:0 3px 3px 0; background:linear-gradient(var(--amber),var(--phos))}
-.rank{font-family:var(--mono); font-size:13px; color:var(--faint); text-align:center}
-.rank.top{color:var(--amber)}
+/* held (top 10): green left rail */
+.row.held::before{content:""; position:absolute; left:0; top:11px; bottom:11px; width:3px;
+  border-radius:0 3px 3px 0; background:linear-gradient(var(--phos),var(--green))}
+/* watch (bubble): muted, slightly dimmer */
+.row.watch{background:var(--panel2)}
+.row.watch .idname .tkr{opacity:.92}
+/* AI / 自选池 star tint */
+.row.ai .idname .tkr .star{color:var(--amber)}
+.rank{font-family:var(--mono); font-size:15px; font-weight:600; color:var(--faint); text-align:center}
+.row.held .rank{color:var(--phos)}
+.rank.podium{color:var(--amber)}
 .idname .tkr{font-family:var(--disp); font-weight:600; font-size:19px; letter-spacing:-.01em}
-.idname .tkr .star{color:var(--amber); font-size:13px; margin-left:6px; vertical-align:1px}
+.idname .tkr .star{font-size:13px; margin-left:6px; vertical-align:1px}
 .idname .nm{font-size:11.5px; color:var(--muted); margin-top:2px; white-space:nowrap;
   overflow:hidden; text-overflow:ellipsis; max-width:155px}
 .idname .sec{display:inline-flex; align-items:center; gap:6px; margin-top:7px;
@@ -126,14 +142,19 @@ select{appearance:none; background:var(--panel); border:1px solid var(--line);
 .mt{display:flex; flex-direction:column}
 .mt .ml{font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
 .mt .mv{font-family:var(--mono); font-size:14px; font-weight:500; margin-top:2px}
-.mt .mv.pos{color:var(--green)} .mt .mv.amb{color:var(--amber)}
-.scorebox{text-align:right}
-.scorebox .sv{font-family:var(--mono); font-size:27px; font-weight:600; line-height:1; color:var(--phos)}
-.scorebox .sl{font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin-bottom:6px}
+.mt .mv.pos{color:var(--green)} .mt .mv.neg{color:var(--red)} .mt .mv.amb{color:var(--amber)}
+.mombox{text-align:right}
+.mombox .sl{font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin-bottom:6px}
+.mombox .sv{font-family:var(--mono); font-size:24px; font-weight:600; line-height:1; color:var(--phos)}
+.mombox .sv.neg{color:var(--red)}
 .meter{height:5px; background:rgba(22,34,48,.09); border-radius:3px; margin-top:9px; overflow:hidden; position:relative}
 .meter i{display:block; height:100%; background:linear-gradient(90deg,var(--amber),var(--phos)); border-radius:3px}
 .meter::after{content:""; position:absolute; inset:0;
   background-image:repeating-linear-gradient(90deg,transparent 0 11px, var(--panel) 11px 12px)}
+.wbadge{display:inline-block; margin-top:9px; font-family:var(--mono); font-size:10px;
+  letter-spacing:.08em; padding:3px 9px; border-radius:99px; border:1px solid var(--line)}
+.wbadge.hold{color:var(--green); border-color:rgba(28,156,84,.4); background:rgba(28,156,84,.09)}
+.wbadge.wat{color:var(--muted)}
 
 .empty{text-align:center; padding:60px 20px; color:var(--muted); font-family:var(--mono); font-size:13px}
 
@@ -141,17 +162,8 @@ select{appearance:none; background:var(--panel); border:1px solid var(--line);
 .rerun{margin-top:34px; background:linear-gradient(160deg,var(--panel),#10192340);
   border:1px solid var(--line); border-radius:14px; padding:26px}
 .rerun h3{font-family:var(--disp); font-weight:600; font-size:19px}
-.rerun p{color:var(--muted); font-size:13px; margin-top:7px; max-width:560px; line-height:1.6}
-.rerun .io{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
-.rerun textarea{flex:1 1 320px; min-height:62px; background:var(--bg2); border:1px solid var(--line);
-  color:var(--ink); border-radius:9px; padding:13px 15px; font-family:var(--mono); font-size:13px;
-  resize:vertical; outline:none; line-height:1.7}
-.rerun textarea:focus{border-color:var(--phos)}
-.btn{align-self:flex-start; background:var(--phos); color:#FFFFFF; border:0; cursor:pointer;
-  font-family:var(--mono); font-weight:600; font-size:13px; padding:14px 22px; border-radius:9px;
-  letter-spacing:.02em; transition:.15s; white-space:nowrap}
-.btn:hover{filter:brightness(1.08); box-shadow:0 0 0 4px var(--phos-dim)}
-.btn.alt{background:transparent; color:var(--phos); border:1px solid rgba(65,217,193,.4)}
+.rerun p{color:var(--muted); font-size:13px; margin-top:7px; max-width:600px; line-height:1.6}
+.rerun code{color:var(--amber); font-family:var(--mono)}
 
 /* ===== criteria footer ===== */
 .criteria{margin-top:30px; border-top:1px solid var(--line); padding-top:26px}
@@ -163,15 +175,15 @@ select{appearance:none; background:var(--panel); border:1px solid var(--line);
 .crit h4{font-family:var(--disp); font-weight:600; font-size:14.5px; margin:8px 0 6px}
 .crit p{font-size:12.5px; color:var(--muted); line-height:1.55}
 .crit code{font-family:var(--mono); color:var(--amber); font-size:11.5px}
-.disclaimer{margin-top:24px; font-size:11.5px; color:var(--faint); line-height:1.6; max-width:760px}
+.disclaimer{margin-top:24px; font-size:11.5px; color:var(--faint); line-height:1.6; max-width:820px}
 
 @media(max-width:900px){
   .row{grid-template-columns:26px 1fr 92px; grid-template-areas:
-    "rank id score" "trace trace trace" "metrics metrics metrics";
+    "rank id mom" "trace trace trace" "metrics metrics metrics";
     row-gap:14px; column-gap:14px}
   .rank{grid-area:rank} .idname{grid-area:id} .trace{grid-area:trace; height:74px}
   .metrics{grid-area:metrics; grid-template-columns:repeat(4,1fr)}
-  .scorebox{grid-area:score}
+  .mombox{grid-area:mom}
   .idname .nm{max-width:none}
 }
 @media(max-width:560px){
@@ -189,27 +201,28 @@ select{appearance:none; background:var(--panel); border:1px solid var(--line);
   <header>
     <div class="mast">
       <div>
-        <div class="eyebrow">趋势延续 · 入场扫描</div>
-        <h1 class="title" style="margin-top:14px">右侧浅回调
-          <span class="en">RIGHT-SIDE SHALLOW PULLBACK</span></h1>
-        <p class="thesis">在确认的上升趋势中,只挑选<b>仅做了一次浅幅回调、且已在右侧重新拐头向上</b>的强势股。
-          浅回调本身就是强度的证据——强势股几乎不深跌。</p>
+        <div class="eyebrow">动量轮动 · 月度调仓</div>
+        <h1 class="title" style="margin-top:14px">Mom 12-1 动量
+          <span class="en">12-1 MOMENTUM · TOP 10 EQUAL-WEIGHT</span></h1>
+        <p class="thesis">从「标普500 + AI名单」里,买过去<b>12个月最强、但剔除最近1个月</b>的前 10 只,
+          <b>等权持有</b>,每月第 10 个交易日换仓。近月剔除是为了避开短期反转噪音——真正的赢家会持续领跑。</p>
       </div>
       <div class="readout">
-        <div class="cell"><div class="k">扫描</div><div class="v num" id="r-scan">—</div></div>
-        <div class="cell"><div class="k">通过</div><div class="v num hot" id="r-pass">—</div></div>
-        <div class="cell"><div class="k">数据日</div><div class="v num" id="r-date" style="font-size:15px;padding-top:8px">—</div></div>
+        <div class="cell"><div class="k">池子</div><div class="v num" id="r-uni">—</div></div>
+        <div class="cell"><div class="k">持仓</div><div class="v num hot" id="r-pass">—</div></div>
+        <div class="cell"><div class="k">数据日</div><div class="v num date" id="r-date">—</div></div>
+        <div class="cell"><div class="k">下次换仓</div><div class="v num reb" id="r-reb">—</div></div>
       </div>
     </div>
     <div class="sectorbar" id="sectorbar"></div>
   </header>
 
   <div class="legend">
-    <span class="lh">轨迹读法</span>
-    <span class="lg"><svg width="20" height="14"><polygon points="10,2 4,12 16,12" fill="var(--amber)"/></svg><b>摆动高点</b>近期峰值</span>
-    <span class="lg"><svg width="20" height="14"><polygon points="10,12 4,2 16,2" fill="var(--red)"/></svg><b>浅回调低点</b>回撤止于此</span>
-    <span class="lg"><svg width="16" height="16"><circle cx="8" cy="8" r="5" fill="var(--phos)" stroke="var(--bg)" stroke-width="1.5"/><circle cx="8" cy="8" r="8" fill="none" stroke="var(--phos)" stroke-opacity=".35"/></svg><b>右侧拐头</b>当前入场区</span>
-    <span class="lg"><span style="color:var(--amber);font-size:15px;line-height:1">★</span><b>AI/自选</b>来自 tickers.txt · 评分 +15</span>
+    <span class="lh">怎么读</span>
+    <span class="lg"><svg width="46" height="16"><rect x="0" y="4" width="30" height="8" fill="none" stroke="var(--phos)" stroke-width="1.4"/><rect x="30" y="1" width="16" height="14" fill="rgba(22,34,48,.08)"/></svg><b>价格轨迹</b>右侧阴影 = 被剔除的最近 1 月(“减 1”)</span>
+    <span class="lg"><span class="swatch" style="background:linear-gradient(var(--phos),var(--green))"></span><b>持仓</b>前 10 · 等权各 10%</span>
+    <span class="lg"><span class="swatch" style="background:var(--panel2);border:1px solid var(--line)"></span><b>观察区</b>紧邻前 10 的候选</span>
+    <span class="lg"><span style="color:var(--amber);font-size:15px;line-height:1">★</span><b>AI 增量</b>来自 tickers.txt · 非标普成分</span>
   </div>
 
   <div class="controls">
@@ -222,47 +235,49 @@ select{appearance:none; background:var(--panel); border:1px solid var(--line);
       <svg width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg>
     </div>
     <div class="seg" id="sortseg">
-      <button data-k="score" class="on">评分</button>
-      <button data-k="depth">回调浅度</button>
-      <button data-k="from_52w">距高点</button>
-      <button data-k="rsi">RSI</button>
+      <button data-k="mom" class="on">12-1 动量</button>
+      <button data-k="ret_12m">12月涨幅</button>
+      <button data-k="ret_1m">近1月</button>
     </div>
   </div>
 
   <div class="count" id="count"></div>
-  <div class="list" id="list"></div>
+  <div id="held-sec"></div>
+  <div id="watch-sec"></div>
 
   <div class="rerun">
     <span class="eyebrow">部署 · 自动刷新</span>
-    <h3 style="margin-top:10px">数据每天自动更新</h3>
-    <p>这是纯静态页面,本身不联网拉行情——它读取同目录下的 <code style="color:var(--amber);font-family:var(--mono)">data.json</code>。该文件由仓库里的 GitHub Actions 定时任务在<b>每个交易日收盘后约 1.5 小时</b>自动重跑并提交一次(用已定稿的日线);页面打开时取最新一版,开着的标签页每 5 分钟自动重取一次。</p>
+    <h3 style="margin-top:10px">名单每个交易日自动重算</h3>
+    <p>这是纯静态页面,本身不联网拉行情——它读取同目录下的 <code>data.json</code>。该文件由仓库里的 GitHub Actions 定时任务在<b>每个交易日收盘后</b>用已定稿的日线重跑 <code>screener.py</code> 提交一次;页面打开时取最新一版,开着的标签页每 5 分钟自动重取。</p>
     <div style="display:flex;flex-direction:column;gap:11px;margin-top:18px">
-      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">换股票池</span>编辑 <code style="color:var(--amber);font-family:var(--mono)">tickers.txt</code> = AI/自选池(逗号/空格/换行分隔,支持 1024.HK、600519.SS),这些票标 ★ 且评分 <code style="color:var(--amber);font-family:var(--mono)">+15</code>;S&P 500 已一并纳入候选(由 <code style="color:var(--amber);font-family:var(--mono)">screener.py</code> 顶部 <code style="color:var(--amber);font-family:var(--mono)">INCLUDE_SP500</code> 控制)。</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">调参数</span>编辑 <code style="color:var(--amber);font-family:var(--mono)">screener.py</code> 顶部 THRESHOLDS:回调深度 DEPTH_MAX、RSI 区间、流动性门槛等。</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">手动刷新</span>到仓库 Actions 页点 “Run workflow” 立刻重跑一版。</div>
-      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">AI 读取</span>结构化抓 <code style="color:var(--amber);font-family:var(--mono)">data.json</code>、纯文本抓 <code style="color:var(--amber);font-family:var(--mono)">summary.txt</code>、历史抓 <code style="color:var(--amber);font-family:var(--mono)">data/&lt;日期&gt;.json</code>。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:92px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">换股票池</span>编辑 <code>tickers.txt</code> = AI/自选增量名单(逗号/空格/换行分隔,支持 1024.HK、600519.SS);这些票标 ★,与标普 500 现成分一并纳入动量排名。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:92px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">调参数</span>编辑 <code>screener.py</code> 顶部 CONFIG:<code>TOP_N</code> 持仓数、<code>LOOKBACK/SKIP</code> 动量窗口、<code>REB_DAY</code> 换仓日、<code>MIN_PRICE</code> 价格门槛。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:92px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">手动刷新</span>到仓库 Actions 页点 “Run workflow” 立刻重跑一版。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:92px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">AI 读取</span>结构化抓 <code>data.json</code>、纯文本抓 <code>summary.txt</code>、历史抓 <code>data/&lt;日期&gt;.json</code>。</div>
     </div>
   </div>
   <div class="criteria">
-    <div class="ch">筛选逻辑 · 默认参数</div>
+    <div class="ch">策略规则 · 默认参数</div>
     <div class="crit-grid">
-      <div class="crit"><div class="step">01 · 趋势</div><h4>确认上升趋势</h4>
-        <p>收盘 <code>> 50日 > 200日</code> 均线,且 50日线近 20 日向上倾斜。只做右侧、强势。</p></div>
-      <div class="crit"><div class="step">02 · 回调</div><h4>浅幅回撤</h4>
-        <p>距近期高点回撤 <code>3%–13%</code>,回调中守住 50日线、靠近 10/20 日 EMA。太深的剔除。</p></div>
-      <div class="crit"><div class="step">03 · 拐头</div><h4>右侧确认</h4>
-        <p>重新站上 10日 EMA、当日翻红或 RSI 回升,<code>RSI 38–68</code>,已离开回调低点。</p></div>
-      <div class="crit"><div class="step">04 · 质量</div><h4>强度与流动性</h4>
-        <p>距 52周高点 <code>< 20%</code>,日均成交额 <code>> $20M</code>,入场未过度偏离 EMA10。</p></div>
+      <div class="crit"><div class="step">01 · 池子</div><h4>标普 500 + AI 名单</h4>
+        <p>标普 500 现成分(Wikipedia 自动抓取)并入 <code>tickers.txt</code> 的 AI 增量名单,去重后约 550 只。</p></div>
+      <div class="crit"><div class="step">02 · 信号</div><h4>12-1 动量分</h4>
+        <p><code>复权价[t-21] / 复权价[t-252] − 1</code>。取近 12 个月涨幅,<b>剔除</b>最近 1 个月以避开短期反转。</p></div>
+      <div class="crit"><div class="step">03 · 过滤</div><h4>价格与历史</h4>
+        <p>现价 <code>&gt; $5</code>,且有至少 252 天历史。不满足者不参与排名。</p></div>
+      <div class="crit"><div class="step">04 · 选股</div><h4>前 10 · 等权</h4>
+        <p>动量分降序取前 10,<code>各 10%</code> 等权持有。掉出前 10 即卖,配平回各 10%。</p></div>
+      <div class="crit"><div class="step">05 · 换仓</div><h4>每月第 10 个交易日</h4>
+        <p>收盘按新名单调仓,月度一次。成本假设单边 <code>15bps</code>。页面每日重算「当前」名单作实时参考。</p></div>
     </div>
-    <p class="disclaimer">评分(0–100)综合趋势强度、相对强度(距 52 周高点)、回调浅度与确认强度加权得出,用于排序而非目标价。数据经分红调整,来源为公开日线行情,仅截至所示数据日。本工具仅作技术筛选与研究之用,不构成投资建议;我不是持牌投资顾问,任何买卖决定与风险请自行判断。</p>
+    <p class="disclaimer">动量分为过去约 12 个月涨幅(剔除最近 1 个月),用于排序而非目标价。样本回测期为 AI 超级牛市,含成分偏差与事后挑选偏差(AI 名单为回看挑选),真实前瞻收益应大幅打折,且每 3–5 年可能出现 −35%~−45% 回撤。价格经分红调整,来源为公开日线行情,仅截至所示数据日。本工具仅作研究之用,不构成投资建议;我不是持牌投资顾问,任何买卖决定与风险请自行判断。</p>
   </div>
 </div>
 
 <script>
 
 let DATA = null;
-let sortKey='score', q='', secF='';
+let sortKey='mom', q='', secF='';
 const SECTOR_COLORS = {
   'Industrials':'#EBA94A','Financials':'#41D9C1','Materials':'#9B8CFF',
   'Information Technology':'#5FCf8a','Health Care':'#E8716E','Consumer Discretionary':'#E89BC4',
@@ -270,79 +285,111 @@ const SECTOR_COLORS = {
   'Real Estate':'#C0A07A','Communication Services':'#B98CFF','Custom':'#41D9C1','AI':'#BC7710'
 };
 const sc = s => SECTOR_COLORS[s] || '#7E8E9E';
+const pct = v => (v>=0?'+':'') + v + '%';
 
-function trace(spark){
+function trace(spark, skip){
   const W=100,H=40,pad=3;
   const min=Math.min(...spark), max=Math.max(...spark), rng=(max-min)||1;
   const x=i=>pad+i*(W-2*pad)/(spark.length-1);
   const y=v=>pad+(1-(v-min)/rng)*(H-2*pad);
   const pts=spark.map((v,i)=>`${x(i).toFixed(2)},${y(v).toFixed(2)}`);
-  const region = spark.length-30>0?spark.length-30:0;
-  let hi=region; for(let i=region;i<spark.length;i++) if(spark[i]>spark[hi]) hi=i;
-  let lo=hi; for(let i=hi;i<spark.length;i++) if(spark[i]<spark[lo]) lo=i;
   const en=spark.length-1;
+  const rising = spark[en] >= spark[0];
+  const col = rising ? 'var(--phos)' : 'var(--red)';
+  const bidx = Math.max(0, spark.length-1-(skip||0));   // start of the excluded month
+  const bx = x(bidx);
   const path=`M ${pts.join(' L ')}`;
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
     <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="var(--phos)" stop-opacity=".22"/>
-      <stop offset="1" stop-color="var(--phos)" stop-opacity="0"/></linearGradient></defs>
+      <stop offset="0" stop-color="${col}" stop-opacity=".20"/>
+      <stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+    <rect x="${bx.toFixed(2)}" y="0" width="${(W-bx).toFixed(2)}" height="${H}" fill="rgba(22,34,48,.06)"/>
+    <line x1="${bx.toFixed(2)}" y1="0" x2="${bx.toFixed(2)}" y2="${H}" stroke="var(--faint)"
+      stroke-width="0.6" stroke-dasharray="1.5,1.5" vector-effect="non-scaling-stroke"/>
     <path d="${path} L ${x(en)},${H} L ${x(0)},${H} Z" fill="url(#g)"/>
-    <path class="tr" d="${path}" fill="none" stroke="var(--phos)" stroke-width="1.3"
+    <path class="tr" d="${path}" fill="none" stroke="${col}" stroke-width="1.3"
       stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-    <polygon points="${x(hi)},${y(spark[hi])-4.5} ${x(hi)-2.6},${y(spark[hi])-0.5} ${x(hi)+2.6},${y(spark[hi])-0.5}" fill="var(--amber)" vector-effect="non-scaling-stroke"/>
-    <polygon points="${x(lo)},${y(spark[lo])+4.5} ${x(lo)-2.6},${y(spark[lo])+0.5} ${x(lo)+2.6},${y(spark[lo])+0.5}" fill="var(--red)" vector-effect="non-scaling-stroke"/>
-    <circle cx="${x(en)}" cy="${y(spark[en])}" r="4.5" fill="none" stroke="var(--phos)" stroke-opacity=".4" vector-effect="non-scaling-stroke"/>
-    <circle cx="${x(en)}" cy="${y(spark[en])}" r="2.4" fill="var(--phos)" vector-effect="non-scaling-stroke"/>
+    <circle cx="${x(en)}" cy="${y(spark[en])}" r="4.5" fill="none" stroke="${col}" stroke-opacity=".4" vector-effect="non-scaling-stroke"/>
+    <circle cx="${x(en)}" cy="${y(spark[en])}" r="2.4" fill="${col}" vector-effect="non-scaling-stroke"/>
   </svg>`;
 }
 
-function rowHTML(r,i){
-  return `<div class="row${r.ai?' ai':''}" data-sym="${r.symbol}">
-    <div class="rank num ${i<3?'top':''}">${String(i+1).padStart(2,'0')}</div>
+function rowHTML(r){
+  const cls = (r.ai?' ai':'') + (r.held?' held':' watch');
+  const podium = r.rank<=3 ? ' podium' : '';
+  const m1 = r.ret_1m>=0?'pos':'neg';
+  const m12 = r.ret_12m>=0?'pos':'neg';
+  const momCls = r.mom<0?' neg':'';
+  return `<div class="row${cls}" data-sym="${r.symbol}">
+    <div class="rank num${r.held?podium:''}">${String(r.rank).padStart(2,'0')}</div>
     <div class="idname">
-      <div class="tkr">${r.symbol}${r.ai?'<span class="star" title="AI/自选池 · 评分含 +15 加成">★</span>':''}</div><div class="nm">${r.name}</div>
+      <div class="tkr">${r.symbol}${r.ai?'<span class="star" title="AI增量名单 · 非标普成分">★</span>':''}</div><div class="nm">${r.name}</div>
       <div class="sec"><i style="background:${sc(r.sector)}"></i>${r.sector}</div>
     </div>
-    <div class="trace">${trace(r.spark)}</div>
+    <div class="trace">${trace(r.spark, r.skip_bars)}</div>
     <div class="metrics">
-      <div class="mt"><span class="ml">回调深度</span><span class="mv">${r.depth}%</span></div>
-      <div class="mt"><span class="ml">距52周高</span><span class="mv ${r.from_52w<3?'pos':''}">-${r.from_52w}%</span></div>
-      <div class="mt"><span class="ml">RSI(14)</span><span class="mv">${r.rsi}</span></div>
-      <div class="mt"><span class="ml">偏离EMA10</span><span class="mv amb">+${r.ext_ema10}%</span></div>
+      <div class="mt"><span class="ml">近1月(剔除)</span><span class="mv ${m1}">${pct(r.ret_1m)}</span></div>
+      <div class="mt"><span class="ml">满12月涨幅</span><span class="mv ${m12}">${pct(r.ret_12m)}</span></div>
+      <div class="mt"><span class="ml">现价</span><span class="mv">$${r.price.toLocaleString()}</span></div>
+      <div class="mt"><span class="ml">权重</span><span class="mv ${r.held?'pos':''}">${r.held?r.weight+'%':'—'}</span></div>
     </div>
-    <div class="scorebox"><div class="sl">评分</div><div class="sv num">${r.score}</div>
-      <div class="meter"><i style="width:${r.score}%"></i></div></div>
+    <div class="mombox"><div class="sl">12-1 动量</div><div class="sv num${momCls}">${pct(r.mom)}</div>
+      <div class="meter"><i style="width:${Math.max(2,r.mom_pct)}%"></i></div>
+      <span class="wbadge ${r.held?'hold':'wat'}">${r.held?'持仓 '+r.weight+'%':'观察'}</span></div>
   </div>`;
+}
+
+function sortRows(rows){
+  return rows.slice().sort((a,b)=> b[sortKey]-a[sortKey]);
+}
+function filt(r){
+  if(secF && r.sector!==secF) return false;
+  if(q){const t=(r.symbol+' '+r.name).toLowerCase(); if(!t.includes(q)) return false;}
+  return true;
+}
+
+function animate(container){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  requestAnimationFrame(()=>container.querySelectorAll('.tr').forEach((p,idx)=>{
+    const L=p.getTotalLength(); p.style.strokeDasharray=L; p.style.strokeDashoffset=L;
+    p.style.transition=`stroke-dashoffset .9s ${.03*idx+.05}s cubic-bezier(.4,0,.2,1)`;
+    requestAnimationFrame(()=>p.style.strokeDashoffset=0);
+  }));
+}
+
+function section(title, sub, rows){
+  if(!rows.length) return '';
+  return `<div class="grouphdr"><span class="gt">${title}</span>`+
+    `<span class="gs">${sub}</span><span class="gline"></span></div>`+
+    `<div class="list">${rows.map(rowHTML).join('')}</div>`;
 }
 
 function render(){
   if(!DATA){return;}
-  let rows = DATA.results.filter(r=>{
-    if(secF && r.sector!==secF) return false;
-    if(q){const t=(r.symbol+' '+r.name).toLowerCase(); if(!t.includes(q)) return false;}
-    return true;
-  });
-  rows.sort((a,b)=> sortKey==='depth' ? a.depth-b.depth
-    : sortKey==='from_52w' ? a.from_52w-b.from_52w : b[sortKey]-a[sortKey]);
-  const list=document.getElementById('list');
-  const sk={score:'评分',depth:'回调浅度',from_52w:'距高点',rsi:'RSI'}[sortKey];
+  const all = DATA.results.filter(filt);
+  const held = sortRows(all.filter(r=>r.held));
+  const watch = sortRows(all.filter(r=>!r.held));
+  const sk={mom:'12-1 动量',ret_12m:'12月涨幅',ret_1m:'近1月'}[sortKey];
   document.getElementById('count').textContent =
-    `显示 ${rows.length} 只 · 按${sk}排序 · 数据 ${DATA.date} · 拉取 ${DATA.generated_at}`;
-  if(!rows.length){ list.innerHTML=`<div class="empty">没有匹配的标的 — 试试清空搜索或换板块</div>`; return; }
-  list.innerHTML = rows.map(rowHTML).join('');
-  if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
-    requestAnimationFrame(()=>list.querySelectorAll('.tr').forEach((p,idx)=>{
-      const L=p.getTotalLength(); p.style.strokeDasharray=L; p.style.strokeDashoffset=L;
-      p.style.transition=`stroke-dashoffset .9s ${.04*idx+.05}s cubic-bezier(.4,0,.2,1)`;
-      requestAnimationFrame(()=>p.style.strokeDashoffset=0);
-    }));
+    `持仓 ${held.length} · 观察 ${watch.length} · 按${sk}排序 · 数据 ${DATA.date} · 拉取 ${DATA.generated_at}`;
+
+  const hsec=document.getElementById('held-sec'), wsec=document.getElementById('watch-sec');
+  if(!all.length){
+    hsec.innerHTML=`<div class="empty">没有匹配的标的 — 试试清空搜索或换板块</div>`;
+    wsec.innerHTML=''; return;
   }
+  hsec.innerHTML = section('本期持仓', `前 ${DATA.top_n} · 等权各 ${(100/DATA.top_n).toFixed(0)}%`, held);
+  wsec.innerHTML = section('观察区', '紧邻前 10 的候选', watch);
+  animate(hsec); animate(wsec);
 }
 
 function populateHeader(){
-  document.getElementById('r-scan').textContent = DATA.scanned;
-  document.getElementById('r-pass').innerHTML = DATA.passed+' <small>/'+DATA.scanned+'</small>';
+  document.getElementById('r-uni').textContent = DATA.universe;
+  document.getElementById('r-pass').innerHTML = DATA.top_n+' <small>/'+DATA.scanned+'</small>';
   document.getElementById('r-date').textContent = DATA.date;
+  const reb=document.getElementById('r-reb');
+  if(DATA.is_reb_today){ reb.textContent='今日换仓'; reb.classList.add('today'); }
+  else { reb.textContent=DATA.next_reb || '—'; reb.classList.remove('today'); }
   const secCounts={}; DATA.results.forEach(r=>secCounts[r.sector]=(secCounts[r.sector]||0)+1);
   const sbar=document.getElementById('sectorbar'); const sel=document.getElementById('sector');
   sbar.innerHTML=''; sel.innerHTML='<option value="">全部板块</option>';
@@ -361,7 +408,7 @@ async function load(){
     populateHeader(); render();
   }catch(e){
     if(!DATA){
-      document.getElementById('list').innerHTML =
+      document.getElementById('held-sec').innerHTML =
         `<div class="empty">读不到 data.json — 确认它与 index.html 在同一目录,且已由定时任务生成。<br><span style="opacity:.6">(${e.message})</span></div>`;
     }
   }
@@ -375,7 +422,7 @@ document.querySelectorAll('#sortseg button').forEach(b=>b.addEventListener('clic
   b.classList.add('on'); sortKey=b.dataset.k; render();
 }));
 
-document.getElementById('list').innerHTML='<div class="empty">加载中…</div>';
+document.getElementById('held-sec').innerHTML='<div class="empty">加载中…</div>';
 load();
 setInterval(load, 5*60*1000);   // self-refresh every 5 min while the tab is open
 

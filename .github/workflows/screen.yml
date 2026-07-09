@@ -1,0 +1,46 @@
+name: refresh-momentum-screen
+
+# 每个交易日收盘后重算 Mom 12-1 名单并提交 data.json / summary.txt / data/<date>.json
+on:
+  workflow_dispatch:        # 允许手动 "Run workflow"
+  schedule:
+    # GitHub cron 用 UTC, 且是尽力而为(可能延迟 5-15 分钟)。
+    # 排在美股收盘(16:00 ET)后约 45 分钟, 覆盖夏令时(EDT=UTC-4)与冬令时(EST=UTC-5)。
+    - cron: '45 20 * * 1-5'   # 16:45 EDT (夏令时)
+    - cron: '45 21 * * 1-5'   # 16:45 EST (冬令时)
+
+permissions:
+  contents: write            # 让任务能把结果提交回仓库
+
+concurrency:
+  group: momentum-screen
+  cancel-in-progress: false
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run momentum screener
+        run: python screener.py
+
+      - name: Commit results
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json summary.txt data/
+          if git diff --staged --quiet; then
+            echo "no changes to commit"
+          else
+            git commit -m "chore: refresh momentum screen $(date -u +%Y-%m-%d)"
+            git push
+          fi
