@@ -1,0 +1,11 @@
+# 自定义股票池示例 —— 把本文件重命名为 tickers.txt 即生效
+# 删除 tickers.txt 则自动回到「标普500全成分股」
+# 分隔符随意:逗号、空格或换行都行。支持交易所后缀:
+#   美股:    NVDA  MSFT  AVGO  BRK.B
+#   港股:    1024.HK  0772.HK  0700.HK
+#   A股:     600519.SS  000001.SZ  300750.SZ
+#   日股/韩股: 8035.T   005930.KS
+
+NVDA, MSFT, AVGO, ASML, AMD, CMI, URI, GWW, JBHT
+1024.HK, 0772.HK, 0700.HK
+600519.SS, 000001.SZ

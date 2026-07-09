@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>右侧浅回调筛选器</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F6F8; --bg2:#FFFFFF; --panel:#FFFFFF; --panel2:#F1F3F6;
+  --line:rgba(22,34,48,.13); --line2:rgba(22,34,48,.07);
+  --ink:#16242F; --muted:#586572; --faint:#95A1AD;
+  --phos:#0C9C86; --phos-dim:rgba(12,156,134,.11);
+  --amber:#BC7710; --red:#D2524F; --green:#1C9C54;
+  --r:10px;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:
+    radial-gradient(1100px 560px at 82% -12%, rgba(12,156,134,.07), transparent 60%),
+    radial-gradient(820px 460px at 8% 112%, rgba(188,119,16,.05), transparent 55%),
+    var(--bg);
+  color:var(--ink); font-family:var(--body);
+  font-size:15px; line-height:1.5; letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased; padding-bottom:60px;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:0 22px}
+.eyebrow{font-family:var(--mono); font-size:10.5px; font-weight:500;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--phos)}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+/* ===== masthead ===== */
+header{padding:46px 0 26px; border-bottom:1px solid var(--line)}
+.mast{display:flex; justify-content:space-between; align-items:flex-end;
+  gap:30px; flex-wrap:wrap}
+.title{font-family:var(--disp); font-weight:600; font-size:clamp(30px,5vw,46px);
+  line-height:1.02; letter-spacing:-.02em}
+.title .en{display:block; font-size:clamp(13px,1.6vw,16px); font-weight:500;
+  letter-spacing:.04em; color:var(--muted); margin-top:10px; font-family:var(--mono)}
+.thesis{max-width:430px; color:var(--muted); font-size:13.5px; line-height:1.6; margin-top:16px}
+.thesis b{color:var(--ink); font-weight:600}
+/* instrument readout */
+.readout{display:flex; gap:0; border:1px solid var(--line); border-radius:var(--r);
+  overflow:hidden; background:var(--panel); box-shadow:0 1px 3px rgba(22,34,48,.05)}
+.readout .cell{padding:14px 18px; border-right:1px solid var(--line); text-align:left; min-width:74px}
+.readout .cell:last-child{border-right:0}
+.readout .k{font-family:var(--mono); font-size:9.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--faint)}
+.readout .v{font-family:var(--mono); font-size:26px; font-weight:600; margin-top:5px; line-height:1}
+.readout .v.hot{color:var(--phos)}
+.readout .v small{font-size:13px; color:var(--muted); font-weight:400}
+
+/* sector chips */
+.sectorbar{display:flex; gap:8px; flex-wrap:wrap; margin-top:22px}
+.schip{font-family:var(--mono); font-size:11px; padding:5px 11px; border-radius:99px;
+  border:1px solid var(--line); color:var(--muted); display:flex; gap:7px; align-items:center}
+.schip i{width:7px; height:7px; border-radius:2px; display:inline-block}
+.schip b{color:var(--ink); font-weight:600}
+
+/* ===== legend / how to read ===== */
+.legend{display:flex; gap:26px; flex-wrap:wrap; align-items:center;
+  padding:18px 20px; margin:26px 0 4px; background:var(--panel);
+  border:1px solid var(--line); border-radius:var(--r); box-shadow:0 1px 3px rgba(22,34,48,.04)}
+.legend .lh{font-family:var(--mono); font-size:10px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--faint)}
+.lg{display:flex; gap:9px; align-items:center; font-size:12.5px; color:var(--muted)}
+.lg svg{flex:0 0 auto}
+.lg b{color:var(--ink); font-weight:600; margin-right:2px}
+
+/* ===== controls ===== */
+.controls{display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+  padding:20px 0 16px; position:sticky; top:0; z-index:5;
+  background:linear-gradient(var(--bg) 70%, transparent)}
+.search{flex:1 1 200px; position:relative; min-width:160px}
+.search input{width:100%; background:var(--panel); border:1px solid var(--line);
+  color:var(--ink); padding:11px 14px 11px 38px; border-radius:8px;
+  font-family:var(--mono); font-size:13px; outline:none}
+.search input:focus{border-color:var(--phos)}
+.search svg{position:absolute; left:13px; top:50%; transform:translateY(-50%); opacity:.5}
+.seg{display:flex; background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.seg button{background:none; border:0; color:var(--muted); font-family:var(--mono);
+  font-size:11.5px; padding:10px 13px; cursor:pointer; border-right:1px solid var(--line);
+  letter-spacing:.02em; transition:.15s}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--phos-dim); color:var(--phos)}
+.seg button:hover:not(.on){color:var(--ink)}
+.selwrap{position:relative}
+select{appearance:none; background:var(--panel); border:1px solid var(--line);
+  color:var(--ink); font-family:var(--mono); font-size:12px; padding:10px 32px 10px 13px;
+  border-radius:8px; cursor:pointer; outline:none}
+.selwrap svg{position:absolute; right:11px; top:50%; transform:translateY(-50%); pointer-events:none; opacity:.5}
+
+/* ===== results ===== */
+.count{font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.1em;
+  text-transform:uppercase; padding:4px 2px 12px}
+.list{display:flex; flex-direction:column; gap:10px}
+.row{display:grid; grid-template-columns:30px 168px 1fr 230px 120px;
+  align-items:center; position:relative; gap:18px; background:var(--panel);
+  border:1px solid var(--line); border-radius:var(--r); padding:15px 18px;
+  box-shadow:0 1px 3px rgba(22,34,48,.05);
+  transition:border-color .18s, transform .18s, box-shadow .18s}
+.row:hover{border-color:rgba(12,156,134,.5); transform:translateX(2px);
+  box-shadow:0 4px 14px rgba(22,34,48,.09)}
+/* AI / 自选池 高亮:左侧渐变竖条 + 淡金底 */
+.row.ai{background:linear-gradient(90deg,rgba(188,119,16,.06),var(--panel) 42%)}
+.row.ai::before{content:""; position:absolute; left:0; top:11px; bottom:11px; width:3px;
+  border-radius:0 3px 3px 0; background:linear-gradient(var(--amber),var(--phos))}
+.rank{font-family:var(--mono); font-size:13px; color:var(--faint); text-align:center}
+.rank.top{color:var(--amber)}
+.idname .tkr{font-family:var(--disp); font-weight:600; font-size:19px; letter-spacing:-.01em}
+.idname .tkr .star{color:var(--amber); font-size:13px; margin-left:6px; vertical-align:1px}
+.idname .nm{font-size:11.5px; color:var(--muted); margin-top:2px; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis; max-width:155px}
+.idname .sec{display:inline-flex; align-items:center; gap:6px; margin-top:7px;
+  font-family:var(--mono); font-size:10px; color:var(--muted)}
+.idname .sec i{width:7px;height:7px;border-radius:2px}
+.trace{height:62px; position:relative}
+.trace svg{width:100%; height:100%; overflow:visible}
+.metrics{display:grid; grid-template-columns:1fr 1fr; gap:6px 16px}
+.mt{display:flex; flex-direction:column}
+.mt .ml{font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+.mt .mv{font-family:var(--mono); font-size:14px; font-weight:500; margin-top:2px}
+.mt .mv.pos{color:var(--green)} .mt .mv.amb{color:var(--amber)}
+.scorebox{text-align:right}
+.scorebox .sv{font-family:var(--mono); font-size:27px; font-weight:600; line-height:1; color:var(--phos)}
+.scorebox .sl{font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin-bottom:6px}
+.meter{height:5px; background:rgba(22,34,48,.09); border-radius:3px; margin-top:9px; overflow:hidden; position:relative}
+.meter i{display:block; height:100%; background:linear-gradient(90deg,var(--amber),var(--phos)); border-radius:3px}
+.meter::after{content:""; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(90deg,transparent 0 11px, var(--panel) 11px 12px)}
+
+.empty{text-align:center; padding:60px 20px; color:var(--muted); font-family:var(--mono); font-size:13px}
+
+/* ===== rerun panel ===== */
+.rerun{margin-top:34px; background:linear-gradient(160deg,var(--panel),#10192340);
+  border:1px solid var(--line); border-radius:14px; padding:26px}
+.rerun h3{font-family:var(--disp); font-weight:600; font-size:19px}
+.rerun p{color:var(--muted); font-size:13px; margin-top:7px; max-width:560px; line-height:1.6}
+.rerun .io{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
+.rerun textarea{flex:1 1 320px; min-height:62px; background:var(--bg2); border:1px solid var(--line);
+  color:var(--ink); border-radius:9px; padding:13px 15px; font-family:var(--mono); font-size:13px;
+  resize:vertical; outline:none; line-height:1.7}
+.rerun textarea:focus{border-color:var(--phos)}
+.btn{align-self:flex-start; background:var(--phos); color:#FFFFFF; border:0; cursor:pointer;
+  font-family:var(--mono); font-weight:600; font-size:13px; padding:14px 22px; border-radius:9px;
+  letter-spacing:.02em; transition:.15s; white-space:nowrap}
+.btn:hover{filter:brightness(1.08); box-shadow:0 0 0 4px var(--phos-dim)}
+.btn.alt{background:transparent; color:var(--phos); border:1px solid rgba(65,217,193,.4)}
+
+/* ===== criteria footer ===== */
+.criteria{margin-top:30px; border-top:1px solid var(--line); padding-top:26px}
+.criteria .ch{font-family:var(--mono); font-size:10px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--faint); margin-bottom:16px}
+.crit-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px}
+.crit{padding:16px 18px; background:var(--panel); border:1px solid var(--line2); border-radius:var(--r)}
+.crit .step{font-family:var(--mono); font-size:11px; color:var(--phos); letter-spacing:.1em}
+.crit h4{font-family:var(--disp); font-weight:600; font-size:14.5px; margin:8px 0 6px}
+.crit p{font-size:12.5px; color:var(--muted); line-height:1.55}
+.crit code{font-family:var(--mono); color:var(--amber); font-size:11.5px}
+.disclaimer{margin-top:24px; font-size:11.5px; color:var(--faint); line-height:1.6; max-width:760px}
+
+@media(max-width:900px){
+  .row{grid-template-columns:26px 1fr 92px; grid-template-areas:
+    "rank id score" "trace trace trace" "metrics metrics metrics";
+    row-gap:14px; column-gap:14px}
+  .rank{grid-area:rank} .idname{grid-area:id} .trace{grid-area:trace; height:74px}
+  .metrics{grid-area:metrics; grid-template-columns:repeat(4,1fr)}
+  .scorebox{grid-area:score}
+  .idname .nm{max-width:none}
+}
+@media(max-width:560px){
+  .wrap{padding:0 15px}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .readout .cell{padding:11px 13px; min-width:62px}
+  .readout .v{font-size:21px}
+  .mast{gap:20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="mast">
+      <div>
+        <div class="eyebrow">趋势延续 · 入场扫描</div>
+        <h1 class="title" style="margin-top:14px">右侧浅回调
+          <span class="en">RIGHT-SIDE SHALLOW PULLBACK</span></h1>
+        <p class="thesis">在确认的上升趋势中,只挑选<b>仅做了一次浅幅回调、且已在右侧重新拐头向上</b>的强势股。
+          浅回调本身就是强度的证据——强势股几乎不深跌。</p>
+      </div>
+      <div class="readout">
+        <div class="cell"><div class="k">扫描</div><div class="v num" id="r-scan">—</div></div>
+        <div class="cell"><div class="k">通过</div><div class="v num hot" id="r-pass">—</div></div>
+        <div class="cell"><div class="k">数据日</div><div class="v num" id="r-date" style="font-size:15px;padding-top:8px">—</div></div>
+      </div>
+    </div>
+    <div class="sectorbar" id="sectorbar"></div>
+  </header>
+
+  <div class="legend">
+    <span class="lh">轨迹读法</span>
+    <span class="lg"><svg width="20" height="14"><polygon points="10,2 4,12 16,12" fill="var(--amber)"/></svg><b>摆动高点</b>近期峰值</span>
+    <span class="lg"><svg width="20" height="14"><polygon points="10,12 4,2 16,2" fill="var(--red)"/></svg><b>浅回调低点</b>回撤止于此</span>
+    <span class="lg"><svg width="16" height="16"><circle cx="8" cy="8" r="5" fill="var(--phos)" stroke="var(--bg)" stroke-width="1.5"/><circle cx="8" cy="8" r="8" fill="none" stroke="var(--phos)" stroke-opacity=".35"/></svg><b>右侧拐头</b>当前入场区</span>
+    <span class="lg"><span style="color:var(--amber);font-size:15px;line-height:1">★</span><b>AI/自选</b>来自 tickers.txt · 评分 +15</span>
+  </div>
+
+  <div class="controls">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+      <input id="search" placeholder="搜索代码或公司名…">
+    </div>
+    <div class="selwrap">
+      <select id="sector"><option value="">全部板块</option></select>
+      <svg width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l5 5 5-5"/></svg>
+    </div>
+    <div class="seg" id="sortseg">
+      <button data-k="score" class="on">评分</button>
+      <button data-k="depth">回调浅度</button>
+      <button data-k="from_52w">距高点</button>
+      <button data-k="rsi">RSI</button>
+    </div>
+  </div>
+
+  <div class="count" id="count"></div>
+  <div class="list" id="list"></div>
+
+  <div class="rerun">
+    <span class="eyebrow">部署 · 自动刷新</span>
+    <h3 style="margin-top:10px">数据每天自动更新</h3>
+    <p>这是纯静态页面,本身不联网拉行情——它读取同目录下的 <code style="color:var(--amber);font-family:var(--mono)">data.json</code>。该文件由仓库里的 GitHub Actions 定时任务在<b>每个交易日收盘后约 1.5 小时</b>自动重跑并提交一次(用已定稿的日线);页面打开时取最新一版,开着的标签页每 5 分钟自动重取一次。</p>
+    <div style="display:flex;flex-direction:column;gap:11px;margin-top:18px">
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">换股票池</span>编辑 <code style="color:var(--amber);font-family:var(--mono)">tickers.txt</code> = AI/自选池(逗号/空格/换行分隔,支持 1024.HK、600519.SS),这些票标 ★ 且评分 <code style="color:var(--amber);font-family:var(--mono)">+15</code>;S&P 500 已一并纳入候选(由 <code style="color:var(--amber);font-family:var(--mono)">screener.py</code> 顶部 <code style="color:var(--amber);font-family:var(--mono)">INCLUDE_SP500</code> 控制)。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">调参数</span>编辑 <code style="color:var(--amber);font-family:var(--mono)">screener.py</code> 顶部 THRESHOLDS:回调深度 DEPTH_MAX、RSI 区间、流动性门槛等。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">手动刷新</span>到仓库 Actions 页点 “Run workflow” 立刻重跑一版。</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6"><span style="display:inline-block;min-width:88px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--phos)">AI 读取</span>结构化抓 <code style="color:var(--amber);font-family:var(--mono)">data.json</code>、纯文本抓 <code style="color:var(--amber);font-family:var(--mono)">summary.txt</code>、历史抓 <code style="color:var(--amber);font-family:var(--mono)">data/&lt;日期&gt;.json</code>。</div>
+    </div>
+  </div>
+  <div class="criteria">
+    <div class="ch">筛选逻辑 · 默认参数</div>
+    <div class="crit-grid">
+      <div class="crit"><div class="step">01 · 趋势</div><h4>确认上升趋势</h4>
+        <p>收盘 <code>> 50日 > 200日</code> 均线,且 50日线近 20 日向上倾斜。只做右侧、强势。</p></div>
+      <div class="crit"><div class="step">02 · 回调</div><h4>浅幅回撤</h4>
+        <p>距近期高点回撤 <code>3%–13%</code>,回调中守住 50日线、靠近 10/20 日 EMA。太深的剔除。</p></div>
+      <div class="crit"><div class="step">03 · 拐头</div><h4>右侧确认</h4>
+        <p>重新站上 10日 EMA、当日翻红或 RSI 回升,<code>RSI 38–68</code>,已离开回调低点。</p></div>
+      <div class="crit"><div class="step">04 · 质量</div><h4>强度与流动性</h4>
+        <p>距 52周高点 <code>< 20%</code>,日均成交额 <code>> $20M</code>,入场未过度偏离 EMA10。</p></div>
+    </div>
+    <p class="disclaimer">评分(0–100)综合趋势强度、相对强度(距 52 周高点)、回调浅度与确认强度加权得出,用于排序而非目标价。数据经分红调整,来源为公开日线行情,仅截至所示数据日。本工具仅作技术筛选与研究之用,不构成投资建议;我不是持牌投资顾问,任何买卖决定与风险请自行判断。</p>
+  </div>
+</div>
+
+<script>
+
+let DATA = null;
+let sortKey='score', q='', secF='';
+const SECTOR_COLORS = {
+  'Industrials':'#EBA94A','Financials':'#41D9C1','Materials':'#9B8CFF',
+  'Information Technology':'#5FCf8a','Health Care':'#E8716E','Consumer Discretionary':'#E89BC4',
+  'Consumer Staples':'#7FB3E8','Energy':'#E8C24A','Utilities':'#6FD4E8',
+  'Real Estate':'#C0A07A','Communication Services':'#B98CFF','Custom':'#41D9C1','AI':'#BC7710'
+};
+const sc = s => SECTOR_COLORS[s] || '#7E8E9E';
+
+function trace(spark){
+  const W=100,H=40,pad=3;
+  const min=Math.min(...spark), max=Math.max(...spark), rng=(max-min)||1;
+  const x=i=>pad+i*(W-2*pad)/(spark.length-1);
+  const y=v=>pad+(1-(v-min)/rng)*(H-2*pad);
+  const pts=spark.map((v,i)=>`${x(i).toFixed(2)},${y(v).toFixed(2)}`);
+  const region = spark.length-30>0?spark.length-30:0;
+  let hi=region; for(let i=region;i<spark.length;i++) if(spark[i]>spark[hi]) hi=i;
+  let lo=hi; for(let i=hi;i<spark.length;i++) if(spark[i]<spark[lo]) lo=i;
+  const en=spark.length-1;
+  const path=`M ${pts.join(' L ')}`;
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--phos)" stop-opacity=".22"/>
+      <stop offset="1" stop-color="var(--phos)" stop-opacity="0"/></linearGradient></defs>
+    <path d="${path} L ${x(en)},${H} L ${x(0)},${H} Z" fill="url(#g)"/>
+    <path class="tr" d="${path}" fill="none" stroke="var(--phos)" stroke-width="1.3"
+      stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    <polygon points="${x(hi)},${y(spark[hi])-4.5} ${x(hi)-2.6},${y(spark[hi])-0.5} ${x(hi)+2.6},${y(spark[hi])-0.5}" fill="var(--amber)" vector-effect="non-scaling-stroke"/>
+    <polygon points="${x(lo)},${y(spark[lo])+4.5} ${x(lo)-2.6},${y(spark[lo])+0.5} ${x(lo)+2.6},${y(spark[lo])+0.5}" fill="var(--red)" vector-effect="non-scaling-stroke"/>
+    <circle cx="${x(en)}" cy="${y(spark[en])}" r="4.5" fill="none" stroke="var(--phos)" stroke-opacity=".4" vector-effect="non-scaling-stroke"/>
+    <circle cx="${x(en)}" cy="${y(spark[en])}" r="2.4" fill="var(--phos)" vector-effect="non-scaling-stroke"/>
+  </svg>`;
+}
+
+function rowHTML(r,i){
+  return `<div class="row${r.ai?' ai':''}" data-sym="${r.symbol}">
+    <div class="rank num ${i<3?'top':''}">${String(i+1).padStart(2,'0')}</div>
+    <div class="idname">
+      <div class="tkr">${r.symbol}${r.ai?'<span class="star" title="AI/自选池 · 评分含 +15 加成">★</span>':''}</div><div class="nm">${r.name}</div>
+      <div class="sec"><i style="background:${sc(r.sector)}"></i>${r.sector}</div>
+    </div>
+    <div class="trace">${trace(r.spark)}</div>
+    <div class="metrics">
+      <div class="mt"><span class="ml">回调深度</span><span class="mv">${r.depth}%</span></div>
+      <div class="mt"><span class="ml">距52周高</span><span class="mv ${r.from_52w<3?'pos':''}">-${r.from_52w}%</span></div>
+      <div class="mt"><span class="ml">RSI(14)</span><span class="mv">${r.rsi}</span></div>
+      <div class="mt"><span class="ml">偏离EMA10</span><span class="mv amb">+${r.ext_ema10}%</span></div>
+    </div>
+    <div class="scorebox"><div class="sl">评分</div><div class="sv num">${r.score}</div>
+      <div class="meter"><i style="width:${r.score}%"></i></div></div>
+  </div>`;
+}
+
+function render(){
+  if(!DATA){return;}
+  let rows = DATA.results.filter(r=>{
+    if(secF && r.sector!==secF) return false;
+    if(q){const t=(r.symbol+' '+r.name).toLowerCase(); if(!t.includes(q)) return false;}
+    return true;
+  });
+  rows.sort((a,b)=> sortKey==='depth' ? a.depth-b.depth
+    : sortKey==='from_52w' ? a.from_52w-b.from_52w : b[sortKey]-a[sortKey]);
+  const list=document.getElementById('list');
+  const sk={score:'评分',depth:'回调浅度',from_52w:'距高点',rsi:'RSI'}[sortKey];
+  document.getElementById('count').textContent =
+    `显示 ${rows.length} 只 · 按${sk}排序 · 数据 ${DATA.date} · 拉取 ${DATA.generated_at}`;
+  if(!rows.length){ list.innerHTML=`<div class="empty">没有匹配的标的 — 试试清空搜索或换板块</div>`; return; }
+  list.innerHTML = rows.map(rowHTML).join('');
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    requestAnimationFrame(()=>list.querySelectorAll('.tr').forEach((p,idx)=>{
+      const L=p.getTotalLength(); p.style.strokeDasharray=L; p.style.strokeDashoffset=L;
+      p.style.transition=`stroke-dashoffset .9s ${.04*idx+.05}s cubic-bezier(.4,0,.2,1)`;
+      requestAnimationFrame(()=>p.style.strokeDashoffset=0);
+    }));
+  }
+}
+
+function populateHeader(){
+  document.getElementById('r-scan').textContent = DATA.scanned;
+  document.getElementById('r-pass').innerHTML = DATA.passed+' <small>/'+DATA.scanned+'</small>';
+  document.getElementById('r-date').textContent = DATA.date;
+  const secCounts={}; DATA.results.forEach(r=>secCounts[r.sector]=(secCounts[r.sector]||0)+1);
+  const sbar=document.getElementById('sectorbar'); const sel=document.getElementById('sector');
+  sbar.innerHTML=''; sel.innerHTML='<option value="">全部板块</option>';
+  Object.entries(secCounts).sort((a,b)=>b[1]-a[1]).forEach(([s,n])=>{
+    const c=document.createElement('span'); c.className='schip';
+    c.innerHTML=`<i style="background:${sc(s)}"></i>${s} <b>${n}</b>`; sbar.appendChild(c);
+    const o=document.createElement('option'); o.value=s; o.textContent=`${s} (${n})`; sel.appendChild(o);
+  });
+}
+
+async function load(){
+  try{
+    const res = await fetch('data.json?ts='+Date.now(), {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    DATA = await res.json();
+    populateHeader(); render();
+  }catch(e){
+    if(!DATA){
+      document.getElementById('list').innerHTML =
+        `<div class="empty">读不到 data.json — 确认它与 index.html 在同一目录,且已由定时任务生成。<br><span style="opacity:.6">(${e.message})</span></div>`;
+    }
+  }
+}
+
+// controls (wired once)
+document.getElementById('search').addEventListener('input',e=>{q=e.target.value.toLowerCase().trim(); render();});
+document.getElementById('sector').addEventListener('change',e=>{secF=e.target.value; render();});
+document.querySelectorAll('#sortseg button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#sortseg button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); sortKey=b.dataset.k; render();
+}));
+
+document.getElementById('list').innerHTML='<div class="empty">加载中…</div>';
+load();
+setInterval(load, 5*60*1000);   // self-refresh every 5 min while the tab is open
+
+</script>
+</body>
+</html>
