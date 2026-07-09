@@ -1,35 +1,35 @@
 Mom 12-1 动量策略 · 前10 等权 · 月度换仓
-数据日 2026-07-08   生成 2026-07-09 08:24 UTC
-合格 548/553 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-08-14 (每月第10个交易日)
+数据日 2026-07-09   生成 2026-07-09 22:10 UTC
+合格 547/553 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-08-14 (每月第10个交易日)
 信号: 动量分 = 复权价[t-21]/复权价[t-252]-1 · 过滤 价格>$5 · 成本假设 单边15bps
 
  # ★ 持 代码          12-1动量     近1月     12月         现价  板块                     名称
 ------------------------------------------------------------------------------------------------------------
- 1 ★ ● AXTI      +3805.3%  -32.5% +2536.8%      60.12  AI                     AXTI
- 2 ★ ● SNDK      +3348.3%  +10.8% +3719.5%   1,727.18  Information Technology Sandisk
- 3 ★ ● BE         +982.1%   -3.5% +943.9%     254.29  AI                     BE
- 4 ★ ● LITE       +848.2%  -18.1% +676.4%     707.10  Information Technology Lumentum
- 5   ● WDC        +686.5%   +7.5% +745.8%     550.30  Information Technology Western Digital
- 6 ★ ● MU         +621.5%   +9.8% +692.5%     948.80  Information Technology Micron Technology
- 7 ★ ● CIEN       +509.3%   -9.7% +450.3%     440.97  Information Technology Ciena
- 8 ★ ● VICR       +497.1%   -2.9% +479.8%     263.16  AI                     VICR
- 9   ● STX        +475.4%   +1.6% +484.4%     860.02  Information Technology Seagate Technology
-10 ★ ● MXL        +465.1%   +6.3% +500.9%      86.05  AI                     MXL
-11 ★   TSEM       +421.9%   -8.0% +380.3%     216.70  AI                     TSEM
-12 ★   NBIS       +376.2%   -5.0% +352.5%     216.48  AI                     NBIS
-13 ★   INTC       +350.8%  +11.2% +401.1%     110.24  Information Technology Intel
-14     COHR       +328.2%  -15.9% +260.1%     317.05  Information Technology Coherent Corp.
-15 ★   NVTS       +307.8%  -46.7% +117.2%      13.36  AI                     NVTS
-16 ★   TTMI       +300.2%  -13.3% +246.9%     145.29  AI                     TTMI
-17     TER        +296.1%   -1.8% +289.1%     351.57  Information Technology Teradyne
-18 ★   ASYS       +289.3%   -4.3% +272.4%      17.69  AI                     ASYS
-19     ECHO       +270.8%  -17.2% +207.0%      96.28  Communication Services EchoStar
-20     MRVL       +269.2%  -12.1% +224.7%     231.71  Information Technology Marvell Technology
-21 ★   SMTC       +254.5%  -14.7% +202.4%     128.84  AI                     SMTC
-22 ★   MRAM       +252.1%  -26.5% +158.8%      17.39  AI                     MRAM
-23 ★   RXT        +251.1%  +39.9% +391.0%       6.58  AI                     RXT
-24 ★   AMD        +246.0%  +10.9% +283.8%     517.41  Information Technology Advanced Micro Devices
-25     GLW        +242.7%   +3.6% +255.2%     184.03  Information Technology Corning Inc.
+ 1 ★ ● AXTI      +3730.4%  -31.1% +2539.2%      62.55  AI                     AXTI
+ 2 ★ ● SNDK      +3456.4%  +13.2% +3924.8%   1,858.27  Information Technology Sandisk
+ 3 ★ ● BE         +943.5%   +1.4% +957.7%     257.02  AI                     BE
+ 4 ★ ● LITE       +880.6%  -12.2% +760.6%     785.77  Information Technology Lumentum
+ 5   ● WDC        +725.1%   +9.7% +805.1%     578.05  Information Technology Western Digital
+ 6 ★ ● MU         +664.1%   +4.5% +698.3%     991.64  Information Technology Micron Technology
+ 7   ● STX        +511.5%   +1.6% +521.2%     890.09  Information Technology Seagate Technology
+ 8 ★ ● VICR       +502.5%   +0.9% +507.9%     277.43  AI                     VICR
+ 9 ★ ● CIEN       +493.3%   -0.9% +487.8%     462.34  Information Technology Ciena
+10 ★ ● TSEM       +443.4%   -6.4% +408.7%     226.58  AI                     TSEM
+11 ★   MXL        +431.7%  +20.9% +542.5%      95.80  AI                     MXL
+12 ★   INTC       +367.4%   +2.1% +377.1%     112.54  Information Technology Intel
+13 ★   NBIS       +362.8%   -0.8% +359.0%     216.20  AI                     NBIS
+14     COHR       +344.6%  -18.6% +262.0%     327.24  Information Technology Coherent Corp.
+15 ★   TTMI       +318.4%  -15.9% +251.8%     149.97  AI                     TTMI
+16 ★   ASYS       +308.1%   -5.3% +286.5%      18.67  AI                     ASYS
+17     TER        +307.3%   -3.2% +294.4%     362.75  Information Technology Teradyne
+18     MRVL       +302.5%  -15.8% +239.0%     243.27  Information Technology Marvell Technology
+19 ★   NVTS       +272.0%  -42.1% +115.5%      14.18  AI                     NVTS
+20     GLW        +259.5%   +2.6% +268.8%     192.38  Information Technology Corning Inc.
+21 ★   MRAM       +259.5%  -25.3% +168.3%      18.14  AI                     MRAM
+22     ECHO       +257.1%  -16.0% +199.9%      97.96  Communication Services EchoStar
+23 ★   AMD        +255.8%  +11.5% +296.7%     546.72  Information Technology Advanced Micro Devices
+24 ★   SMTC       +252.1%  -13.4% +204.9%     137.50  AI                     SMTC
+25     FIX        +251.9%   -3.8% +238.5%   1,781.42  Industrials            Comfort Systems USA
 
 ● = 本期持仓(前10)  ★ = AI增量名单(tickers.txt, 非标普成分)
 注: 研究用途,非投资建议。结构化数据见 data.json;历史见 data/<日期>.json。
