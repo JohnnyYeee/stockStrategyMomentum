@@ -1,35 +1,35 @@
 Mom 12-1 动量策略 · 前10 等权 · 月度换仓
-数据日 2026-07-21   生成 2026-07-21 22:38 UTC
+数据日 2026-07-22   生成 2026-07-22 21:55 UTC
 合格 547/553 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-08-14 (每月第10个交易日)
 信号: 动量分 = 复权价[t-21]/复权价[t-252]-1 · 过滤 价格>$5 · 成本假设 单边15bps
 
  # ★ 持 代码          12-1动量     近1月     12月         现价  板块                     名称
 ------------------------------------------------------------------------------------------------------------
- 1 ★ ● SNDK      +5078.4%  -27.3% +3667.2%   1,589.40  Information Technology Sandisk
- 2 ★ ● AXTI      +3366.0%  -33.2% +2216.0%      56.51  AI                     AXTI
- 3 ★ ● BE        +1216.2%  -31.2% +805.4%     226.26  AI                     BE
- 4   ● WDC       +1000.4%  -26.5% +708.6%     548.39  Information Technology Western Digital
- 5 ★ ● MU         +892.8%  -14.4% +750.1%     970.82  Information Technology Micron Technology
- 6 ★ ● LITE       +731.5%   -1.5% +719.4%     837.56  Information Technology Lumentum
- 7   ● STX        +623.3%  -16.6% +503.2%     891.83  Information Technology Seagate Technology
- 8 ★ ● VICR       +597.5%  -35.2% +351.9%     214.70  AI                     VICR
- 9 ★ ● TSEM       +490.7%  -12.5% +416.9%     250.91  AI                     TSEM
-10 ★ ● INTC       +480.0%  -21.3% +356.5%     105.45  Information Technology Intel
-11 ★   MXL        +447.9%   -3.0% +431.2%      86.06  AI                     MXL
-12 ★   NBIS       +443.1%  -24.3% +310.9%     216.92  AI                     NBIS
-13 ★   CIEN       +403.9%   -4.6% +381.0%     408.73  Information Technology Ciena
-14 ★   ASYS       +388.7%  -18.4% +298.7%      17.98  AI                     ASYS
-15 ★   UCTT       +387.1%  -13.3% +322.3%     105.15  AI                     UCTT
-16 ★   TTMI       +380.7%  -32.2% +226.1%     146.85  AI                     TTMI
-17 ★   BFLY       +375.9%  -23.4% +264.7%       6.82  AI                     BFLY
-18     TER        +367.5%  -14.6% +299.3%     374.04  Information Technology Teradyne
-19 ★   ICHR       +333.5%   -2.8% +321.3%      95.85  AI                     ICHR
-20 ★   FORM       +323.9%  -23.9% +222.4%     113.75  AI                     FORM
-21     MRVL       +316.8%  -33.0% +179.2%     207.96  Information Technology Marvell Technology
-22 ★   MRAM       +301.6%  -40.9% +137.5%      16.03  AI                     MRAM
-23     COHR       +291.1%  -18.6% +218.5%     317.22  Information Technology Coherent Corp.
-24     LRCX       +288.6%  -17.2% +221.7%     322.00  Information Technology Lam Research
-25 ★   ASX        +285.6%   -0.4% +284.1%      40.01  AI                     ASX
+ 1 ★ ● SNDK      +5364.4%  -29.7% +3743.5%   1,599.27  Information Technology Sandisk
+ 2 ★ ● AXTI      +3884.5%  -42.7% +2183.6%      52.98  AI                     AXTI
+ 3 ★ ● BE        +1263.8%  -36.9% +760.5%     218.22  AI                     BE
+ 4 ★ ● MU         +971.4%  -20.8% +748.7%     959.48  Information Technology Micron Technology
+ 5   ● WDC        +968.7%  -24.0% +712.0%     556.67  Information Technology Western Digital
+ 6 ★ ● LITE       +760.9%   -7.2% +699.0%     829.70  Information Technology Lumentum
+ 7 ★ ● VICR       +664.7%  -40.5% +354.7%     217.35  AI                     VICR
+ 8   ● STX        +636.7%  -16.9% +511.9%     908.10  Information Technology Seagate Technology
+ 9 ★ ● TSEM       +535.0%  -21.2% +400.1%     249.53  AI                     TSEM
+10 ★ ● INTC       +505.9%  -27.2% +341.2%     102.62  Information Technology Intel
+11 ★   MXL        +505.8%  -10.0% +445.2%      86.80  AI                     MXL
+12 ★   NBIS       +441.6%  -23.1% +316.6%     218.16  AI                     NBIS
+13 ★   CIEN       +438.6%  -13.7% +364.7%     397.16  Information Technology Ciena
+14 ★   UCTT       +394.1%  -17.6% +307.1%     101.46  AI                     UCTT
+15     TER        +383.2%  -19.2% +290.6%     369.46  Information Technology Teradyne
+16 ★   ASYS       +383.1%  -21.3% +280.3%      17.34  AI                     ASYS
+17 ★   TTMI       +366.5%  -34.7% +204.8%     144.70  AI                     TTMI
+18 ★   ICHR       +340.8%   -4.3% +321.8%      95.33  AI                     ICHR
+19 ★   FORM       +339.8%  -27.6% +218.3%     113.39  AI                     FORM
+20     COHR       +326.0%  -26.6% +212.6%     312.19  Information Technology Coherent Corp.
+21     MRVL       +322.2%  -31.4% +189.4%     210.99  Information Technology Marvell Technology
+22 ★   ASX        +316.2%   -6.2% +290.2%      40.49  AI                     ASX
+23     LRCX       +304.8%  -22.0% +215.6%     319.29  Information Technology Lam Research
+24     GLW        +293.6%  -26.6% +189.0%     154.06  Information Technology Corning Inc.
+25 ★   BFLY       +286.7%   -9.1% +251.6%       6.61  AI                     BFLY
 
 ● = 本期持仓(前10)  ★ = AI增量名单(tickers.txt, 非标普成分)
 注: 研究用途,非投资建议。结构化数据见 data.json;历史见 data/<日期>.json。
