@@ -1,35 +1,35 @@
 Mom 12-1 动量策略 · 前10 等权 · 月度换仓
-数据日 2026-07-23   生成 2026-07-23 22:40 UTC
-合格 547/553 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-08-14 (每月第10个交易日)
+数据日 2026-07-23   生成 2026-07-24 08:12 UTC
+合格 500/503 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-08-14 (每月第10个交易日)
 信号: 动量分 = 复权价[t-21]/复权价[t-252]-1 · 过滤 价格>$5 · 成本假设 单边15bps
 
  # ★ 持 代码          12-1动量     近1月     12月         现价  板块                     名称
 ------------------------------------------------------------------------------------------------------------
- 1 ★ ● SNDK      +4647.6%  -18.0% +3793.4%   1,610.33  Information Technology Sandisk
- 2 ★ ● AXTI      +3215.3%  -32.1% +2152.3%      52.93  AI                     AXTI
- 3 ★ ● BE        +1141.7%  -32.5% +738.0%     217.30  AI                     BE
- 4   ● WDC        +902.9%  -16.8% +734.8%     558.30  Information Technology Western Digital
- 5 ★ ● MU         +864.4%   -5.8% +808.1%     990.21  Information Technology Micron Technology
- 6 ★ ● LITE       +731.0%   +0.7% +736.7%     833.64  Information Technology Lumentum
- 7 ★ ● VICR       +643.6%  -31.2% +411.9%     231.38  AI                     VICR
- 8   ● STX        +613.8%  -12.0% +528.2%     913.36  Information Technology Seagate Technology
- 9 ★ ● TSEM       +478.8%   -7.9% +433.3%     260.42  AI                     TSEM
-10 ★ ● MXL        +476.9%   +2.4% +490.9%      91.24  AI                     MXL
-11 ★   INTC       +469.2%  -24.2% +331.3%     100.23  Information Technology Intel
-12 ★   CIEN       +445.1%  -11.4% +383.1%     407.53  Information Technology Ciena
-13 ★   NBIS       +439.6%  -19.7% +333.2%     220.97  AI                     NBIS
-14 ★   TTMI       +373.3%  -32.0% +221.6%     144.85  AI                     TTMI
-15 ★   UCTT       +365.7%   -9.9% +319.5%     100.56  AI                     UCTT
-16     TER        +349.5%  -11.0% +299.9%     373.75  Information Technology Teradyne
-17 ★   ASYS       +338.1%  -15.2% +271.8%      17.25  AI                     ASYS
-18 ★   ICHR       +325.5%   +2.0% +333.9%      94.02  AI                     ICHR
-19 ★   FORM       +308.3%  -21.0% +222.4%     112.75  AI                     FORM
-20 ★   BFLY       +305.8%  -13.7% +250.3%       6.62  AI                     BFLY
-21     COHR       +292.9%  -17.8% +222.8%     313.22  Information Technology Coherent Corp.
-22     MRVL       +288.3%  -25.0% +191.4%     209.32  Information Technology Marvell Technology
-23 ★   ASX        +286.5%   +0.2% +287.3%      39.46  AI                     ASX
-24     LRCX       +282.2%  -13.9% +229.2%     319.78  Information Technology Lam Research
-25     ECHO       +269.6%  -11.9% +225.4%      91.51  Communication Services EchoStar
+ 1   ● SNDK      +4647.6%  -18.0% +3793.4%   1,610.33  Information Technology Sandisk
+ 2   ● WDC        +902.9%  -16.8% +734.8%     558.30  Information Technology Western Digital
+ 3   ● MU         +864.4%   -5.8% +808.1%     990.21  Information Technology Micron Technology
+ 4   ● LITE       +731.0%   +0.7% +736.7%     833.64  Information Technology Lumentum
+ 5   ● STX        +613.8%  -12.0% +528.2%     913.36  Information Technology Seagate Technology
+ 6   ● INTC       +469.2%  -24.2% +331.3%     100.23  Information Technology Intel
+ 7   ● CIEN       +445.1%  -11.4% +383.1%     407.53  Information Technology Ciena
+ 8   ● TER        +349.5%  -11.0% +299.9%     373.75  Information Technology Teradyne
+ 9   ● COHR       +292.9%  -17.8% +222.8%     313.22  Information Technology Coherent Corp.
+10   ● MRVL       +288.3%  -25.0% +191.4%     209.32  Information Technology Marvell Technology
+11     LRCX       +282.2%  -13.9% +229.2%     319.78  Information Technology Lam Research
+12     ECHO       +269.6%  -11.9% +225.4%      91.51  Communication Services EchoStar
+13     GLW        +263.2%  -19.6% +192.1%     156.06  Information Technology Corning Inc.
+14     FIX        +259.4%   -4.0% +244.9%   1,831.15  Industrials            Comfort Systems USA
+15     DELL       +247.9%   +2.9% +257.9%     439.34  Information Technology Dell Technologies
+16     AMD        +236.0%   +3.8% +248.8%     539.69  Information Technology Advanced Micro Devices
+17     AMAT       +215.4%   -3.9% +202.9%     562.80  Information Technology Applied Materials
+18     FLEX       +189.5%  -15.7% +143.9%     127.94  Information Technology Flex Ltd.
+19     KLAC       +175.8%  -10.5% +146.7%     218.73  Information Technology KLA Corporation
+20     VRT        +154.3%   -4.5% +142.9%     304.04  Industrials            Vertiv
+21     HPE        +144.7%   -2.6% +138.3%      47.64  Information Technology Hewlett Packard Enterprise
+22     CAT        +137.6%   -8.9% +116.4%     894.54  Industrials            Caterpillar Inc.
+23     CNC        +126.4%   +1.0% +128.5%      63.74  Health Care            Centene Corporation
+24     KEYS       +113.3%   -7.8%  +96.7%     325.13  Information Technology Keysight Technologies
+25     WBD        +109.2%   -3.5% +101.9%      25.95  Communication Services Warner Bros. Discovery
 
 ● = 本期持仓(前10)  ★ = AI增量名单(tickers.txt, 非标普成分)
 注: 研究用途,非投资建议。结构化数据见 data.json;历史见 data/<日期>.json。

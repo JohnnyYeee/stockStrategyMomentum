@@ -6,8 +6,8 @@ Mom 12-1 momentum screener -> data.json
 Runs headless (e.g. in GitHub Actions). No API key needed; uses yfinance.
 
 Universe:
-  - S&P 500 现成分 (Wikipedia 自动抓取)
-  - + tickers.txt 里的 AI/自选名单 (去重合并, 标 ai=True)
+  - S&P 500 现成分 (Wikipedia 自动抓取)  ← 默认只用这个 (SPY 成分)
+  - 可选: tickers.txt 的 AI/自选名单, 由 INCLUDE_AI_LIST 开关控制 (默认 False)
 
 Signal:
   动量分 = AdjClose[t-21] / AdjClose[t-252] - 1   (12个月涨幅, 剔除最近1个月)
@@ -19,6 +19,7 @@ import numpy as np, pandas as pd, requests, yfinance as yf
 warnings.filterwarnings("ignore")
 
 # ----------------------- CONFIG (tune here) -----------------------
+INCLUDE_AI_LIST = False # True=并入 tickers.txt 的 AI/自选名单; False=只用标普500(SPY)成分
 TOP_N        = 10       # 持仓只数 (等权各 100/TOP_N %)
 WATCH_EXTRA  = 15       # 额外展示紧邻前10的候选 (11 .. TOP_N+WATCH_EXTRA)
 LOOKBACK     = 252      # 动量回看窗口 (约12个月交易日)
@@ -52,11 +53,11 @@ def load_sp500():
     return pd.read_html(io.StringIO(r.text))[0]
 
 def load_universe():
-    """S&P 500 现成分 ∪ tickers.txt(AI名单). AI名单标 ai=True。"""
+    """池子 = 标普500(SPY)现成分。INCLUDE_AI_LIST=True 时再并入 tickers.txt(AI名单, 标 ai=True)。"""
     meta = {}
-    # 1) AI / priority list from tickers.txt -> ai=True
+    # 1) AI / priority list from tickers.txt -> ai=True  (仅当 INCLUDE_AI_LIST=True)
     p = os.path.join(HERE, "tickers.txt")
-    if os.path.exists(p):
+    if INCLUDE_AI_LIST and os.path.exists(p):
         for tok in open(p).read().replace(",", " ").split():
             u = tok.strip().upper()
             if u and not u.startswith("#"):
