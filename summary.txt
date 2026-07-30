@@ -1,6 +1,6 @@
-Mom 12-1 动量策略 · 前10 等权 · 月度换仓
-数据日 2026-07-29   生成 2026-07-29 22:42 UTC
-合格 500/503 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-08-14 (每月第10个交易日)
+Mom 12-1 动量策略 · 前10 等权 · 单板块≤3 · 月度换仓
+数据日 2026-07-29   生成 2026-07-30 08:34 UTC
+合格 499/503 只 · 持仓 10 只等权各 10% · 单板块≤3 · 下次换仓 ~2026-08-14 (每月第10个交易日)
 信号: 动量分 = 复权价[t-21]/复权价[t-252]-1 · 过滤 价格>$5 · 成本假设 单边15bps
 
  # ★ 持 代码          12-1动量     近1月     12月         现价  板块                     名称
@@ -8,28 +8,29 @@ Mom 12-1 动量策略 · 前10 等权 · 月度换仓
  1   ● SNDK      +4794.7%  -50.5% +2325.1%   1,015.89  Information Technology Sandisk
  2   ● MU         +931.0%  -35.5% +565.3%     739.00  Information Technology Micron Technology
  3   ● WDC        +847.5%  -29.1% +571.5%     462.04  Information Technology Western Digital
- 4   ● LITE       +694.4%  -29.3% +462.1%     602.35  Information Technology Lumentum
- 5   ● STX        +549.0%  -21.1% +412.3%     764.43  Information Technology Seagate Technology
- 6   ● INTC       +536.9%  -37.8% +295.9%      81.88  Information Technology Intel
- 7   ● CIEN       +428.9%  -31.0% +264.8%     330.37  Information Technology Ciena
- 8   ● TER        +409.5%  -31.0% +251.4%     319.41  Information Technology Teradyne
- 9   ● GLW        +366.5%  -51.5% +126.3%     124.05  Information Technology Corning Inc.
-10   ● LRCX       +319.0%  -38.6% +157.3%     252.35  Information Technology Lam Research
+ 4   □ LITE       +694.4%  -29.3% +462.1%     602.35  Information Technology Lumentum
+ 5   □ STX        +549.0%  -21.1% +412.3%     764.43  Information Technology Seagate Technology
+ 6   □ INTC       +536.9%  -37.8% +295.9%      81.88  Information Technology Intel
+ 7   □ CIEN       +428.9%  -31.0% +264.8%     330.37  Information Technology Ciena
+ 8   □ TER        +409.5%  -31.0% +251.4%     319.41  Information Technology Teradyne
+ 9   □ GLW        +366.5%  -51.5% +126.3%     124.05  Information Technology Corning Inc.
+10   □ LRCX       +319.0%  -38.6% +157.3%     252.35  Information Technology Lam Research
 11     COHR       +275.1%  -43.2% +112.9%     222.05  Information Technology Coherent Corp.
 12     AMAT       +267.8%  -37.2% +131.1%     436.45  Information Technology Applied Materials
 13     MRVL       +266.6%  -41.2% +115.7%     163.40  Information Technology Marvell Technology
-14     ECHO       +238.7%  -16.8% +181.8%      83.89  Communication Services EchoStar
+14   ● ECHO       +238.7%  -16.8% +181.8%      83.89  Communication Services EchoStar
 15     FLEX       +216.0%  -35.4% +104.0%     103.02  Information Technology Flex Ltd.
 16     DELL       +213.2%  -10.7% +179.7%     369.64  Information Technology Dell Technologies
 17     AMD        +210.7%  -20.4% +147.4%     429.56  Information Technology Advanced Micro Devices
 18     KLAC       +203.5%  -38.9%  +85.5%     170.19  Information Technology KLA Corporation
-19     FIX        +181.8%  -22.0% +119.8%   1,519.96  Industrials            Comfort Systems USA
-20     CAT        +140.3%  -24.1%  +82.4%     782.71  Industrials            Caterpillar Inc.
-21     CNC        +140.3%   -4.2% +130.2%      61.82  Health Care            Centene Corporation
+19   ● FIX        +181.8%  -22.0% +119.8%   1,519.96  Industrials            Comfort Systems USA
+20   ● CAT        +140.3%  -24.1%  +82.4%     782.71  Industrials            Caterpillar Inc.
+21   ● CNC        +140.3%   -4.2% +130.2%      61.82  Health Care            Centene Corporation
 22     HPE        +117.1%   +0.1% +117.3%      44.44  Information Technology Hewlett Packard Enterprise
-23     VRT        +115.6%  -27.3%  +56.6%     223.04  Industrials            Vertiv
-24     MRNA       +105.5%  -21.8%  +60.7%      54.49  Health Care            Moderna
+23   ● VRT        +115.6%  -27.3%  +56.6%     223.04  Industrials            Vertiv
+24   ● MRNA       +105.5%  -21.8%  +60.7%      54.49  Health Care            Moderna
 25     KEYS       +104.2%  -12.8%  +78.1%     296.72  Information Technology Keysight Technologies
+26   ● WBD         +98.0%   -5.5%  +87.2%      25.64  Communication Services Warner Bros. Discovery
 
-● = 本期持仓(前10)  ★ = AI增量名单(tickers.txt, 非标普成分)
+● = 本期持仓  □ = 动量进前10但板块满员被顺延  ★ = AI增量名单(tickers.txt, 非标普成分)
 注: 研究用途,非投资建议。结构化数据见 data.json;历史见 data/<日期>.json。

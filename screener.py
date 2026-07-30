@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Mom 12-1 momentum screener -> data.json
-每月第10个交易日,从「标普500 + AI名单」按 12-1 动量取前10只等权持有。
+每月第10个交易日,从「标普500 + AI名单」按 12-1 动量取前10只等权持有
+(单一 GICS 板块最多 SECTOR_CAP 只, 超出按动量顺延给其他板块)。
 本脚本每天收盘后重算「当前」前10名单(live signal),并附带 11..N 观察区。
 Runs headless (e.g. in GitHub Actions). No API key needed; uses yfinance.
 
@@ -21,6 +22,7 @@ warnings.filterwarnings("ignore")
 # ----------------------- CONFIG (tune here) -----------------------
 INCLUDE_AI_LIST = False # True=并入 tickers.txt 的 AI/自选名单; False=只用标普500(SPY)成分
 TOP_N        = 10       # 持仓只数 (等权各 100/TOP_N %)
+SECTOR_CAP   = 3        # 单一 GICS 板块最多持仓只数; 超出的按动量顺延给其他板块 (0=不限)
 WATCH_EXTRA  = 15       # 额外展示紧邻前10的候选 (11 .. TOP_N+WATCH_EXTRA)
 LOOKBACK     = 252      # 动量回看窗口 (约12个月交易日)
 SKIP         = 21       # 剔除最近 N 个交易日 (约1个月, 即 12-1 的 "-1")
@@ -160,8 +162,21 @@ def screen():
     ret1m = (A.iloc[i] / A.iloc[i - SKIP]     - 1)
     ret12 = (A.iloc[i] / A.iloc[i - LOOKBACK] - 1)
     ranked = mom.sort_values(ascending=False)
-    keep   = list(ranked.index[:TOP_N + WATCH_EXTRA])
+    # 板块上限: 按动量降序贪心选入, 某板块满 SECTOR_CAP 只后跳过该板块后续候选
+    held_syms, seccnt = [], {}
+    for sym in ranked.index:
+        sec = meta[sym]["sector"]
+        if SECTOR_CAP and seccnt.get(sec, 0) >= SECTOR_CAP:
+            continue
+        held_syms.append(sym)
+        seccnt[sec] = seccnt.get(sec, 0) + 1
+        if len(held_syms) >= TOP_N:
+            break
+    held_set = set(held_syms)
+    keep = list(ranked.index[:TOP_N + WATCH_EXTRA])
+    keep += [s for s in held_syms if s not in keep]   # 被顺延选中的低排名票也要展示
     maxmom = float(ranked.iloc[0]) if len(ranked) else 1.0
+    rank_of = {s: i + 1 for i, s in enumerate(ranked.index)}
 
     # ---- rebalance calendar ----
     rds = rebalance_dates(A.index)
@@ -177,14 +192,17 @@ def screen():
         next_reb = bd[REB_DAY - 1].date()
 
     results = []
-    for rank, sym in enumerate(keep, 1):
+    for sym in keep:
+        rank = rank_of[sym]
+        is_held = sym in held_set
         s = closes[sym]
         spark = [round(float(x), 2) for x in s.iloc[-SPARK_BARS:].tolist()]
         results.append(dict(
             symbol=sym, name=meta[sym]["name"], sector=meta[sym]["sector"],
             ai=bool(meta[sym].get("ai", False)),
-            rank=rank, held=bool(rank <= TOP_N),
-            weight=round(100.0 / TOP_N, 1) if rank <= TOP_N else 0.0,
+            rank=rank, held=is_held,
+            capped=bool(rank <= TOP_N and not is_held),   # 按动量本应入选、因板块满员被顺延
+            weight=round(100.0 / TOP_N, 1) if is_held else 0.0,
             mom=round(float(mom[sym]) * 100, 1),           # 12-1 动量分 %
             ret_1m=round(float(ret1m[sym]) * 100, 1),      # 被剔除的最近1月 %
             ret_12m=round(float(ret12[sym]) * 100, 1),     # 满12月涨幅 %
@@ -201,7 +219,8 @@ def screen():
         reb_day=REB_DAY, last_reb=str(last_reb) if last_reb else "",
         is_reb_today=is_reb_today, next_reb=str(next_reb), cost_bps=COST_BPS,
         params=dict(lookback=LOOKBACK, skip=SKIP, top_n=TOP_N, min_price=MIN_PRICE,
-                    reb_day=REB_DAY, watch_extra=WATCH_EXTRA, cost_bps=COST_BPS),
+                    reb_day=REB_DAY, watch_extra=WATCH_EXTRA, cost_bps=COST_BPS,
+                    sector_cap=SECTOR_CAP),
         results=results,
     )
 
@@ -226,11 +245,12 @@ def screen():
 def write_summary(out):
     p = out["params"]
     lines = []
-    lines.append("Mom 12-1 动量策略 · 前10 等权 · 月度换仓")
+    cap = f" · 单板块≤{p['sector_cap']}" if p.get("sector_cap") else ""
+    lines.append(f"Mom 12-1 动量策略 · 前10 等权{cap} · 月度换仓")
     lines.append(f"数据日 {out['date']}   生成 {out['generated_at']}")
     reb = "今日为换仓日" if out["is_reb_today"] else f"下次换仓 ~{out['next_reb']}"
     lines.append(f"合格 {out['scanned']}/{out['universe']} 只 · 持仓 {out['top_n']} 只等权各 "
-                 f"{100/out['top_n']:.0f}% · {reb} (每月第{p['reb_day']}个交易日)")
+                 f"{100/out['top_n']:.0f}%{cap} · {reb} (每月第{p['reb_day']}个交易日)")
     lines.append(f"信号: 动量分 = 复权价[t-{p['skip']}]/复权价[t-{p['lookback']}]-1 · "
                  f"过滤 价格>${p['min_price']:.0f} · 成本假设 单边{p['cost_bps']:.0f}bps")
     lines.append("")
@@ -239,12 +259,13 @@ def write_summary(out):
     lines.append("-" * 108)
     for r in out["results"]:
         star = "★" if r.get("ai") else " "
-        hold = "●" if r["held"] else " "
+        hold = "●" if r["held"] else ("□" if r.get("capped") else " ")
         lines.append(f"{r['rank']:>2} {star:<1} {hold:<1} {r['symbol']:<8} "
                      f"{r['mom']:>+8.1f}% {r['ret_1m']:>+6.1f}% {r['ret_12m']:>+6.1f}% "
                      f"{r['price']:>10,.2f}  {r['sector'][:22]:<22} {r['name']}")
     lines.append("")
-    lines.append("● = 本期持仓(前10)  ★ = AI增量名单(tickers.txt, 非标普成分)")
+    lines.append(f"● = 本期持仓  □ = 动量进前{out['top_n']}但板块满员被顺延  "
+                 f"★ = AI增量名单(tickers.txt, 非标普成分)")
     lines.append("注: 研究用途,非投资建议。结构化数据见 data.json;历史见 data/<日期>.json。")
     with open(os.path.join(HERE, "summary.txt"), "w") as f:
         f.write("\n".join(lines) + "\n")
