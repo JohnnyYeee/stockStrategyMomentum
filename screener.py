@@ -2,7 +2,7 @@
 """
 Mom 12-1 momentum screener -> data.json
 每月第10个交易日,从「标普500 + AI名单」按 12-1 动量取前10只等权持有
-(单一 GICS 板块最多 SECTOR_CAP 只, 超出按动量顺延给其他板块)。
+(可选 SECTOR_CAP: 单一 GICS 板块最多 N 只, 超出按动量顺延; 0=不限, 默认关闭)。
 本脚本每天收盘后重算「当前」前10名单(live signal),并附带 11..N 观察区。
 Runs headless (e.g. in GitHub Actions). No API key needed; uses yfinance.
 
@@ -22,7 +22,7 @@ warnings.filterwarnings("ignore")
 # ----------------------- CONFIG (tune here) -----------------------
 INCLUDE_AI_LIST = False # True=并入 tickers.txt 的 AI/自选名单; False=只用标普500(SPY)成分
 TOP_N        = 10       # 持仓只数 (等权各 100/TOP_N %)
-SECTOR_CAP   = 3        # 单一 GICS 板块最多持仓只数; 超出的按动量顺延给其他板块 (0=不限)
+SECTOR_CAP   = 0        # 单一 GICS 板块最多持仓只数; 超出的按动量顺延给其他板块 (0=不限)
 WATCH_EXTRA  = 15       # 额外展示紧邻前10的候选 (11 .. TOP_N+WATCH_EXTRA)
 LOOKBACK     = 252      # 动量回看窗口 (约12个月交易日)
 SKIP         = 21       # 剔除最近 N 个交易日 (约1个月, 即 12-1 的 "-1")
