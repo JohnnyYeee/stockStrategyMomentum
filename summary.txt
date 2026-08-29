@@ -1,35 +1,35 @@
 Mom 12-1 动量策略 · 前10 等权 · 月度换仓
-数据日 2026-08-27   生成 2026-08-28 05:50 UTC
+数据日 2026-08-28   生成 2026-08-29 02:56 UTC
 合格 500/503 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-09-14 (每月第10个交易日)
 信号: 动量分 = 复权价[t-21]/复权价[t-252]-1 · 过滤 价格>$5 · 成本假设 单边15bps
 
  # ★ 持 代码          12-1动量     近1月     12月         现价  板块                     名称
 ------------------------------------------------------------------------------------------------------------
- 1   ● SNDK      +2045.5%  +46.2% +3036.1%   1,484.95  Information Technology Sandisk
- 2   ● MU         +535.4%  +26.6% +704.2%     935.39  Information Technology Micron Technology
- 3   ● WDC        +481.2%   -0.0% +481.2%     462.00  Information Technology Western Digital
- 4   ● LITE       +383.3%  +58.7% +667.2%     956.14  Information Technology Lumentum
- 5   ● STX        +366.4%  +10.8% +416.9%     847.20  Information Technology Seagate Technology
- 6   ● CIEN       +261.1%  +21.0% +337.0%     399.85  Information Technology Ciena
- 7   ● INTC       +236.3%  +12.5% +278.2%      92.09  Information Technology Intel
- 8   ● DELL       +185.8%  +27.8% +265.1%     472.26  Information Technology Dell Technologies
- 9   ● TER        +170.0%  +16.5% +214.5%     372.06  Information Technology Teradyne
-10   ● AMAT       +166.5%  +10.6% +194.8%     482.36  Information Technology Applied Materials
-11     AMD        +157.8%  +11.0% +186.1%     476.67  Information Technology Advanced Micro Devices
-12     LRCX       +144.9%  +26.2% +209.1%     318.58  Information Technology Lam Research
-13     COHR       +142.5%  +33.0% +222.5%     295.39  Information Technology Coherent Corp.
-14     MRVL       +120.5%  +47.8% +225.8%     241.45  Information Technology Marvell Technology
-15     MRNA       +120.3% +162.0% +477.3%     142.77  Health Care            Moderna
-16     WBD        +117.3%  +12.6% +144.7%      28.88  Communication Services Warner Bros. Discovery
-17     CNC        +115.7%   +5.7% +127.9%      65.33  Health Care            Centene Corporation
-18     FIX        +115.2%   +6.3% +128.8%   1,614.98  Industrials            Comfort Systems USA
-19     DDOG       +109.2%   -8.1%  +92.3%     242.93  Information Technology Datadog
-20     VLO        +108.6%  +15.5% +140.9%     346.59  Energy                 Valero Energy
-21     HPE        +101.6%  +22.4% +146.9%      54.41  Information Technology Hewlett Packard Enterprise
-22     FTNT        +97.3%  +12.8% +122.5%     172.78  Information Technology Fortinet
-23     STLD        +93.8%   -6.5%  +81.2%     235.84  Materials              Steel Dynamics
-24     FLEX        +92.6%  +11.9% +115.6%     115.30  Information Technology Flex Ltd.
-25     JBHT        +92.6%   -4.5%  +84.0%     263.39  Industrials            J.B. Hunt
+ 1   ● SNDK      +2542.4%  +16.0% +2965.6%   1,484.98  Information Technology Sandisk
+ 2   ● MU         +644.0%   +6.7% +693.5%     932.86  Information Technology Micron Technology
+ 3   ● WDC        +562.6%  -13.8% +471.1%     459.45  Information Technology Western Digital
+ 4   ● LITE       +450.9%  +29.1% +611.2%     895.00  Information Technology Lumentum
+ 5   ● STX        +413.5%   -2.6% +400.2%     829.76  Information Technology Seagate Technology
+ 6   ● CIEN       +301.2%   +1.7% +308.1%     378.44  Information Technology Ciena
+ 7   ● INTC       +266.7%   -1.8% +260.0%      89.47  Information Technology Intel
+ 8   ● TER        +213.2%   -2.9% +204.2%     354.97  Information Technology Teradyne
+ 9   ● DELL       +209.4%  +12.7% +248.7%     456.24  Information Technology Dell Technologies
+10   ● AMAT       +206.6%   -7.9% +182.4%     461.67  Information Technology Applied Materials
+11     AMD        +190.4%   -4.1% +178.6%     465.58  Information Technology Advanced Micro Devices
+12     LRCX       +188.8%   +1.4% +192.8%     301.90  Information Technology Lam Research
+13     COHR       +174.6%  +12.1% +207.8%     279.20  Information Technology Coherent Corp.
+14     MRVL       +145.6%  +18.2% +190.3%     216.62  Information Technology Marvell Technology
+15     FIX        +139.6%  -10.5% +114.4%   1,518.73  Industrials            Comfort Systems USA
+16     MRNA       +130.8% +138.2% +449.8%     137.99  Health Care            Moderna
+17     HPE        +111.7%  +11.0% +134.9%      52.31  Information Technology Hewlett Packard Enterprise
+18     CNC        +111.0%   +6.4% +124.5%      64.75  Health Care            Centene Corporation
+19     VLO        +110.3%  +13.5% +138.7%     352.36  Energy                 Valero Energy
+20     WBD        +109.6%  +13.0% +136.8%      28.77  Communication Services Warner Bros. Discovery
+21     FLEX       +108.3%   -1.3% +105.7%     110.50  Information Technology Flex Ltd.
+22     DDOG       +103.9%  -11.8%  +79.9%     236.98  Information Technology Datadog
+23     KLAC       +103.7%   -2.5%  +98.5%     175.54  Information Technology KLA Corporation
+24     GLW        +103.3%  +10.2% +124.0%     148.98  Information Technology Corning Inc.
+25     FTNT        +97.4%   +7.6% +112.5%     166.00  Information Technology Fortinet
 
 ● = 本期持仓  □ = 动量进前10但板块满员被顺延  ★ = AI增量名单(tickers.txt, 非标普成分)
 注: 研究用途,非投资建议。结构化数据见 data.json;历史见 data/<日期>.json。
