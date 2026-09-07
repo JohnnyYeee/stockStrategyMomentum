@@ -1,5 +1,5 @@
 Mom 12-1 动量策略 · 前10 等权 · 月度换仓
-数据日 2026-09-04   生成 2026-09-04 23:22 UTC
+数据日 2026-09-04   生成 2026-09-07 23:01 UTC
 合格 500/503 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-10-14 (每月第10个交易日)
 信号: 动量分 = 复权价[t-21]/复权价[t-252]-1 · 过滤 价格>$5 · 成本假设 单边15bps
 
@@ -16,7 +16,7 @@ Mom 12-1 动量策略 · 前10 等权 · 月度换仓
  9   ● CIEN       +245.3%  -20.5% +174.5%     321.00  Information Technology Ciena
 10   ● AMAT       +234.8%  -13.7% +188.9%     454.71  Information Technology Applied Materials
 11     MRVL       +229.2%   +6.2% +249.5%     223.55  Information Technology Marvell Technology
-12     TER        +223.2%   -7.2% +199.8%     357.03  Information Technology Teradyne
+12     TER        +223.2%   -7.2% +199.9%     357.03  Information Technology Teradyne
 13     LRCX       +206.2%   +0.6% +208.1%     307.65  Information Technology Lam Research
 14     AMD        +202.4%   -2.4% +195.2%     477.57  Information Technology Advanced Micro Devices
 15     FIX        +137.1%   -6.0% +122.9%   1,610.34  Industrials            Comfort Systems USA
