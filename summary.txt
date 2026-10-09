@@ -1,35 +1,35 @@
 Mom 12-1 动量策略 · 前10 等权 · 月度换仓
-数据日 2026-10-06   生成 2026-10-08 01:21 UTC
-合格 498/503 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-11-13 (每月第10个交易日)
+数据日 2026-10-07   生成 2026-10-09 00:42 UTC
+合格 499/503 只 · 持仓 10 只等权各 10% · 下次换仓 ~2026-11-13 (每月第10个交易日)
 信号: 动量分 = 复权价[t-21]/复权价[t-252]-1 · 过滤 价格>$5 · 成本假设 单边15bps
 
  # ★ 持 代码          12-1动量     近1月     12月         现价  板块                     名称
 ------------------------------------------------------------------------------------------------------------
- 1   ● SNDK      +1255.0%   -4.6% +1193.1%   1,660.46  Information Technology Sandisk
- 2   ● MU         +441.8%   +2.8% +457.2%   1,045.56  Information Technology Micron Technology
- 3   ● LITE       +438.0%  +28.6% +591.9%   1,133.40  Information Technology Lumentum
- 4   ● MRNA       +410.9%  +28.8% +558.0%     187.46  Health Care            Moderna
- 5   ● DELL       +277.2%   +9.5% +313.0%     574.00  Information Technology Dell Technologies
- 6   ● WDC        +256.5%  -12.0% +213.6%     411.04  Information Technology Western Digital
- 7   ● STX        +237.7%   -5.1% +220.6%     805.63  Information Technology Seagate Technology
- 8   ● AMD        +190.0%  +36.0% +294.4%     649.42  Information Technology Advanced Micro Devices
- 9   ● BE         +180.1%  +17.0% +227.6%     295.78  Industrials            Bloom Energy
-10   ● INTC       +160.1%  +17.4% +205.5%     112.50  Information Technology Intel
-11     MRVL       +159.8%  +28.4% +233.6%     287.01  Information Technology Marvell Technology
-12     COHR       +148.2%  +20.0% +197.9%     338.36  Information Technology Coherent Corp.
-13     TER        +145.6%  +20.5% +196.0%     430.32  Information Technology Teradyne
-14     VLO        +136.0%  +13.1% +166.9%     419.22  Energy                 Valero Energy
-15     HPE        +116.1%  +35.9% +193.7%      70.48  Information Technology Hewlett Packard Enterprise
-16     ILMN       +113.7%  +25.4% +167.9%     273.54  Health Care            Illumina, Inc.
-17     CIEN       +112.0%  +38.2% +192.9%     443.65  Information Technology Ciena
-18     LRCX       +111.7%   +8.6% +130.0%     333.89  Information Technology Lam Research
-19     AMAT       +110.2%  +16.6% +145.1%     530.27  Information Technology Applied Materials
-20     MPC        +104.7%  +11.2% +127.6%     432.36  Energy                 Marathon Petroleum
-21     JBHT       +100.1%  -17.5%  +65.1%     225.93  Industrials            J.B. Hunt
-22     PSX         +97.5%   +5.8% +108.8%     269.79  Energy                 Phillips 66
-23     FIX         +97.3%  +12.9% +122.7%   1,817.96  Industrials            Comfort Systems USA
-24     FLEX        +95.1%  +10.8% +116.2%     121.38  Information Technology Flex Ltd.
-25     TGT         +92.2%   -6.1%  +80.4%     154.33  Consumer Staples       Target Corporation
+ 1   ● SNDK      +1334.3%   -2.6% +1296.7%   1,692.42  Information Technology Sandisk
+ 2   ● LITE       +509.3%  +13.5% +591.8%   1,111.07  Information Technology Lumentum
+ 3   ● MU         +424.3%   +8.8% +470.3%   1,088.00  Information Technology Micron Technology
+ 4   ● MRNA       +409.5%  +40.0% +613.4%     196.48  Health Care            Moderna
+ 5   ● WDC        +281.7%  -15.1% +224.2%     405.42  Information Technology Western Digital
+ 6   ● STX        +274.3%  -10.6% +234.5%     807.57  Information Technology Seagate Technology
+ 7   ● DELL       +270.9%   +8.4% +302.3%     578.96  Information Technology Dell Technologies
+ 8   ● BE         +218.8%   +5.1% +234.9%     291.29  Industrials            Bloom Energy
+ 9   ● INTC       +185.5%   +8.3% +209.2%     113.12  Information Technology Intel
+10   ● COHR       +163.0%  +10.8% +191.5%     334.56  Information Technology Coherent Corp.
+11     MRVL       +154.0%  +26.3% +220.8%     284.68  Information Technology Marvell Technology
+12     TER        +152.1%  +10.7% +179.0%     411.78  Information Technology Teradyne
+13     AMD        +148.3%  +27.7% +217.0%     645.86  Information Technology Advanced Micro Devices
+14     VLO        +139.2%  +10.8% +165.0%     424.10  Energy                 Valero Energy
+15     HPE        +129.5%  +29.0% +196.0%      72.09  Information Technology Hewlett Packard Enterprise
+16     CIEN       +122.7%  +30.8% +191.3%     446.45  Information Technology Ciena
+17     LRCX       +115.6%   +2.9% +121.9%     329.51  Information Technology Lam Research
+18     AMAT       +112.3%  +10.1% +133.8%     520.65  Information Technology Applied Materials
+19     MPC        +109.0%  +11.2% +132.4%     442.26  Energy                 Marathon Petroleum
+20     ILMN       +108.9%  +26.9% +165.1%     267.76  Health Care            Illumina, Inc.
+21     TWLO       +105.9%  +20.9% +148.9%     273.00  Information Technology Twilio
+22     PSX        +100.7%   +4.8% +110.4%     271.62  Energy                 Phillips 66
+23     FIX        +100.1%   +5.6% +111.4%   1,741.36  Industrials            Comfort Systems USA
+24     FLEX        +99.6%   +4.4% +108.3%     119.34  Information Technology Flex Ltd.
+25     GLW         +96.2%   -1.6%  +93.0%     163.25  Information Technology Corning Inc.
 
 ● = 本期持仓  □ = 动量进前10但板块满员被顺延  ★ = AI增量名单(tickers.txt, 非标普成分)
 注: 研究用途,非投资建议。结构化数据见 data.json;历史见 data/<日期>.json。
